@@ -58,7 +58,10 @@ require("../config/excel_reader2.php");
 include("core/c_admin.php"); 
 
 (isset($_SESSION['id_pengawas'])) ? $id_pengawas = $_SESSION['id_pengawas'] : $id_pengawas = 0;
-($id_pengawas == 0) ? header('location:login.php') : null;
+if ($id_pengawas == 0) {
+	header("Location: " . $homeurl . "/crew/login.php");
+	exit;
+}
 $pengawas = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM pengawas  WHERE id_pengawas='$id_pengawas'"));
 
 (isset($_GET['pg'])) ? $pg = $_GET['pg'] : $pg = '';

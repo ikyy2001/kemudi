@@ -78,7 +78,7 @@
           <div style="font-size:40px; color:var(--primary); margin-bottom:15px;"><i class="fa fa-graduation-cap"></i></div>
           <h4 style="font-weight: 700; margin-bottom: 5px;">Portal Guru</h4>
           <p style="color:var(--text-muted); font-size:13px; margin-bottom:20px;">Kelola materi pembelajaran, kuis, tugas, dan nilai siswa.</p>
-          <a href="<?= $homeurl ?>/guru/" class="btn-login" style="display:block; text-decoration:none; line-height:2.6; background-color: var(--primary); color: white;">Buka Portal Guru</a>
+          <a href="<?= $homeurl ?>/guru/index.php" class="btn-login" style="display:block; text-decoration:none; line-height:2.6; background-color: var(--primary); color: white;">Buka Portal Guru</a>
         </div>
       </div>
 
@@ -88,7 +88,7 @@
           <div style="font-size:40px; color:var(--secondary); margin-bottom:15px;"><i class="fa fa-user-secret"></i></div>
           <h4 style="font-weight: 700; margin-bottom: 5px;">Portal Administrator</h4>
           <p style="color:var(--text-muted); font-size:13px; margin-bottom:20px;">Manajemen sekolah, master data kelas/siswa, dan kontrol ujian daring.</p>
-          <a href="<?= $homeurl ?>/crew/" class="btn-login" style="display:block; text-decoration:none; line-height:2.6; background-color: var(--secondary); color: white;">Buka Portal Admin</a>
+          <a href="<?= $homeurl ?>/crew/login.php" class="btn-login" style="display:block; text-decoration:none; line-height:2.6; background-color: var(--secondary); color: white;">Buka Portal Admin</a>
         </div>
       </div>
     </div>
