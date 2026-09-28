@@ -1,0 +1,268 @@
+a:2:{s:6:"expire";i:1790566097;s:7:"headers";a:0:{}}ENDCI---><!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<title>Guru Dashboard | Kemudi LMS</title>
+	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+	<link rel='stylesheet' href='../../dist/bootstrap/css/bootstrap.min.css' />
+	<link rel='stylesheet' href='../../plugins/fontawesome/css/all.css' />
+	<link rel='stylesheet' href='../../plugins/select2/select2.min.css' />
+	<link rel='stylesheet' href='../../dist/css/AdminLTE.css' />
+	<link rel='stylesheet' href='../../dist/css/skins/skin-green-light.min.css' />
+	<link rel='stylesheet' href='../../plugins/jQueryUI/jquery-ui.css'>
+	<link rel='stylesheet' href='../../plugins/iCheck/square/green.css' />
+	<link rel='stylesheet' href='../../plugins/slidemenu/jquery-slide-menu-admin.css'>
+	<link rel='stylesheet' href='../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'>
+	<link rel='stylesheet' href='../../plugins/datatables/dataTables.bootstrap.css' />
+	<link rel='stylesheet' href='../../plugins/datatables/extensions/Responsive/css/dataTables.responsive.css' />
+	<link rel='stylesheet' href='../../plugins/datatables/extensions/Select/css/select.bootstrap.css' />
+	<link rel='stylesheet' href='../../plugins/animate/animate.min.css'>
+	<link rel='stylesheet' href='../../plugins/datetimepicker/jquery.datetimepicker.css' />
+	<link rel='stylesheet' href='../../plugins/notify/css/notify-flat.css' />
+	<link rel='stylesheet' href='../../plugins/sweetalert2/dist/sweetalert2.min.css'>
+	<link rel='stylesheet' href='../../plugins/toastr/toastr.min.css'>
+	<link rel='stylesheet' href='../../dist/css/costum.css' />
+	<link rel='stylesheet' href='../../dist/css/jawara-theme.css?v=1790566037' />
+	<link href="../../plugins/summernote/summernote-bs4.css" rel="stylesheet">
+	<script src='../../plugins/tinymce/tinymce.min.js'></script>
+	<script src='../../plugins/jQuery/jquery-3.1.1.min.js'></script>
+	<script src='../../plugins/datatables/jquery.dataTables.min.js'></script>
+	<script src='../../plugins/datatables/dataTables.bootstrap.min.js'></script>
+	<script src='../../plugins/datatables/extensions/Select/js/dataTables.select.min.js'></script>
+	<script src='../../plugins/datatables/extensions/Select/js/select.bootstrap.min.js'></script>
+	<script src='../../plugins/jstoexcel/jquery.table2excel.js'></script>
+	<script src="../../plugins/summernote/summernote-bs4.js"></script>
+	<style type="text/css">
+		.loading {
+		  position: absolute;
+		  left: 50%;
+		  top: 70%;
+		  transform: translate(-50%,-50%);
+		  font: 14px arial;
+		}
+	</style>
+</head><body class='hold-transition skin-green-light sidebar-mini fixed '>
+	<div id='pesan'></div>
+	<div class='loader'>
+		<div class="loading">
+   	 <p id="pesanku" >Harap Tunggu</p>
+  	</div>
+	</div>
+	<div class='wrapper'>
+		
+		<header class='main-header'>
+			<a href='http://localhost:8899/guru/admin/' class='logo' style='background-color:#ffffff; border-bottom: 1px solid #eef2f6; border-right: 1px solid #eef2f6;'>
+	<span class='logo-mini'>
+		<img src="../../dist/img/logo34.png" height="30px" style="border-radius: 6px;">
+	</span>
+	<span class='logo-lg' style="display:flex; align-items:center; justify-content:center; gap:8px; font-weight:800; color:#0f172a; font-size:16px;">
+		<img src="../../dist/img/logo34.png" height="34px" style="border-radius: 8px;"> 
+		<span>Kemudi LMS</span>
+	</span>
+</a>
+<nav class='navbar navbar-static-top' style='background:#ffffff; border-bottom:1px solid #eef2f6;' role='navigation'>
+	<a href='#' class='sidebar-baru' data-toggle='offcanvas' role='button' title="Toggle Menu" style="color:#475569; padding: 15px 18px; font-size:16px;">
+		<i class="fa fa-bars"></i>
+	</a>
+	<div class='navbar-custom-menu'>
+		<ul class='nav navbar-nav' style="display:flex; align-items:center; margin-right:15px; gap:8px;">
+			<li class='hidden-xs'>
+				<span class="navbar-badge-pill" style="margin-top:10px; display:inline-flex;">
+					<i class="fa fa-school" style="color:#0284c7;"></i>
+					Kemudi LMS				</span>
+			</li>
+			<li>
+				<a href='http://localhost:8899/guru/login/log_out' class="btn btn-xs btn-danger" style="margin-top:10px; color:#ffffff !important; border-radius:8px; padding:6px 12px;" title="Keluar">
+					<i class="fa fa-sign-out"></i> Keluar
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>		</header>
+
+		<aside class='main-sidebar'>
+			<section class='sidebar'>
+	<ul class='sidebar-menu tree' data-widget='tree'>
+		<!-- Section: GENERAL -->
+		<li class="header jawara-nav-section">GENERAL</li>
+
+		<li class="">
+			<a href='http://localhost:8899/guru/admin/'>
+				<i class="fa fa-home"></i>
+				<span>Overview</span>
+			</a>
+		</li>
+
+		<li class="">
+			<a href='http://localhost:8899/guru/admin/v_siswa'>
+				<i class="fa fa-user-graduate"></i>
+				<span>Data Siswa</span>
+			</a>
+		</li>
+
+					<li class='treeview '>
+				<a href='#'>
+					<i class="fa fa-tasks"></i>
+					<span>E-Learning</span>
+					<span class='pull-right-container'>
+						<i class='fa fa-angle-down pull-right'></i>
+					</span>
+				</a>
+				<ul class='treeview-menu'>
+					<li class=""><a href='http://localhost:8899/guru/admin/materi'><i class='fa fa-circle-notch'></i> Materi Belajar</a></li>
+					<li class=""><a href='http://localhost:8899/guru/admin/tugas'><i class='fa fa-circle-notch'></i> Tugas Siswa</a></li>
+				</ul>
+			</li>
+		
+		<li class='treeview active'>
+			<a href='#'>
+				<i class="fa fa-file-alt"></i>
+				<span>Bank Soal</span>
+				<span class='pull-right-container'>
+					<i class='fa fa-angle-down pull-right'></i>
+				</span>
+			</a>
+			<ul class='treeview-menu'>
+				<li><a href='http://localhost:8899/guru/soal/daftar_soal'><i class='fa fa-circle-notch'></i> Daftar Soal Ujian</a></li>
+			</ul>
+		</li>
+
+		<li class="">
+			<a href='http://localhost:8899/guru/admin/daftar_ujian'>
+				<i class="fa fa-award"></i>
+				<span>Download Nilai</span>
+			</a>
+		</li>
+
+		<li class="">
+			<a href='http://localhost:8899/guru/admin/status_peserta'>
+				<i class="fa fa-shield-alt"></i>
+				<span>Status Peserta</span>
+			</a>
+		</li>
+
+		<!-- Section: OTHERS -->
+		<li class="header jawara-nav-section">OTHERS</li>
+
+		<li class='treeview'>
+			<a href='#'>
+				<i class="fa fa-chart-line"></i>
+				<span>Analisa</span>
+				<span class='pull-right-container'>
+					<i class='fa fa-angle-down pull-right'></i>
+				</span>
+			</a>
+			<ul class='treeview-menu'>
+				<li><a href='http://localhost:8899/guru/anso/daftar_soal'><i class='fa fa-circle-notch'></i> Analisa Per Soal</a></li>
+			</ul>
+		</li>
+
+		<li class="">
+			<a href='http://localhost:8899/guru/admin/no_ujian'>
+				<i class="fa fa-user-times"></i>
+				<span>Siswa Tidak Ujian</span>
+			</a>
+		</li>
+	</ul>
+
+	<!-- User Profile at bottom -->
+	<div class="jawara-sidebar-footer">
+		<img src='http://localhost:8899/guru/../dist/img/avatar-01.jpg' class='jawara-user-avatar' alt='Avatar'>
+		<div class="jawara-user-info footer-user-details">
+			<div class="jawara-user-name">
+				<span>Guru Pengajar</span>
+				<span class="jawara-role-pill">guru</span>
+			</div>
+			<div class="jawara-user-sub">Kemudi LMS</div>
+		</div>
+		<a href="http://localhost:8899/guru/login/log_out" class="btn-jawara-details footer-action-btn" title="Keluar" style="padding: 6px 10px;">
+			<i class="fa fa-sign-out"></i>
+		</a>
+	</div>
+</section>		</aside>
+		
+		<div class='content-wrapper'>
+			<section class='content' >
+	<div class='row'>
+		<div class='col-md-12'>
+			<div class='box box-solid '>
+				<div class='box-header with-border '>
+					<h3 class='box-title'><i class='fa fa-briefcase'></i> Daftar Soal</h3>
+				</div><!-- /.box-header -->
+				<div class='box-body'>
+					<div id='tablereset' class='table-responsive'>
+						<table id='daftar_soal' class='table table-bordered table-striped'>
+							<thead>
+								<tr>
+									<th width='5px'>#</th>
+									<th>Mata Pelajaran</th>
+									<th>Soal PG</th>
+									<th>Soal Esai</th>
+									<th>Guru</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
+				</div><!-- /.box-body -->
+			</div><!-- /.box -->
+		</div>
+	</div>
+</section>
+<script type="text/javascript">
+	let status_siswa=$('#daftar_soal').DataTable({
+			"aLengthMenu": [[50,100,150,200,250,300,-1], [50,100,150,200,250,300,"All"]],
+			"ajax": "http://localhost:8899/guru/anso/v_daftar_soal_json",
+			processing: true,
+			deferLoading:0,
+
+		});
+</script>
+		</div>
+		<footer class='main-footer hidden-xs'>
+			<div class='container'>
+	<div class='pull-left hidden-xs'>
+		<strong>
+			<span id='end-sidebar'>
+				&copy;2020 Kemudi LMS  Member Of Nusa Garuda Studio			</span>
+		</strong>
+	</div>
+		</footer>
+	
+	</div><!-- ./wrapper -->
+	
+	<script type="text/javascript">
+		$('.loader').fadeOut('slow');
+	</script>
+	<script src='../../dist/bootstrap/js/bootstrap.min.js'></script>
+	<script src='../../plugins/fastclick/fastclick.js'></script>
+	<script src='../../dist/js/adminlte.min.js'></script>
+	<script src='../../dist/js/app.min.js'></script>
+	<script src='../../plugins/datetimepicker/build/jquery.datetimepicker.full.min.js'></script>
+	<script src='../../plugins/slimScroll/jquery.slimscroll.min.js'></script>
+	<script src='../../plugins/iCheck/icheck.min.js'></script>
+	<script src='../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'></script>
+	<script src='../../plugins/select2/select2.min.js'></script>
+	<script src='../../plugins/tableedit/jquery.tabledit.js'></script>
+	<script src='../../plugins/toastr/toastr.min.js'></script>
+	<script src='../../plugins/notify/js/notify.js'></script>
+	<script src='../../plugins/slidemenu/jquery-slide-menu-admin.js'></script>
+	<script src='../../plugins/sweetalert2/dist/sweetalert2.min.js'></script>
+	<!-- <script src='../../plugins/MathJax-2.7.3/MathJax.js?config=TeX-AMS_HTML-full'></script> -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#summernote').summernote({
+				codeviewFilter: false,
+				codeviewIframeFilter: true,
+				focus,
+			});
+			$('.select2').select2();
+			$('.tgl').datetimepicker();
+			$('[data-toggle="tooltip"]').tooltip();
+		});
+	</script></body>
+</html>

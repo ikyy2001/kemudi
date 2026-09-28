@@ -1,0 +1,412 @@
+a:2:{s:6:"expire";i:1790515672;s:7:"headers";a:0:{}}ENDCI---><!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<title>Guru Dashboard | Kemudi LMS</title>
+	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+	<link rel='stylesheet' href='../../dist/bootstrap/css/bootstrap.min.css' />
+	<link rel='stylesheet' href='../../plugins/fontawesome/css/all.css' />
+	<link rel='stylesheet' href='../../plugins/select2/select2.min.css' />
+	<link rel='stylesheet' href='../../dist/css/AdminLTE.css' />
+	<link rel='stylesheet' href='../../dist/css/skins/skin-green-light.min.css' />
+	<link rel='stylesheet' href='../../plugins/jQueryUI/jquery-ui.css'>
+	<link rel='stylesheet' href='../../plugins/iCheck/square/green.css' />
+	<link rel='stylesheet' href='../../plugins/slidemenu/jquery-slide-menu-admin.css'>
+	<link rel='stylesheet' href='../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'>
+	<link rel='stylesheet' href='../../plugins/datatables/dataTables.bootstrap.css' />
+	<link rel='stylesheet' href='../../plugins/datatables/extensions/Responsive/css/dataTables.responsive.css' />
+	<link rel='stylesheet' href='../../plugins/datatables/extensions/Select/css/select.bootstrap.css' />
+	<link rel='stylesheet' href='../../plugins/animate/animate.min.css'>
+	<link rel='stylesheet' href='../../plugins/datetimepicker/jquery.datetimepicker.css' />
+	<link rel='stylesheet' href='../../plugins/notify/css/notify-flat.css' />
+	<link rel='stylesheet' href='../../plugins/sweetalert2/dist/sweetalert2.min.css'>
+	<link rel='stylesheet' href='../../plugins/toastr/toastr.min.css'>
+	<link rel='stylesheet' href='../../dist/css/costum.css' />
+	<link rel='stylesheet' href='../../dist/css/jawara-theme.css?v=1790515612' />
+	<link href="../../plugins/summernote/summernote-bs4.css" rel="stylesheet">
+	<script src='../../plugins/tinymce/tinymce.min.js'></script>
+	<script src='../../plugins/jQuery/jquery-3.1.1.min.js'></script>
+	<script src='../../plugins/datatables/jquery.dataTables.min.js'></script>
+	<script src='../../plugins/datatables/dataTables.bootstrap.min.js'></script>
+	<script src='../../plugins/datatables/extensions/Select/js/dataTables.select.min.js'></script>
+	<script src='../../plugins/datatables/extensions/Select/js/select.bootstrap.min.js'></script>
+	<script src='../../plugins/jstoexcel/jquery.table2excel.js'></script>
+	<script src="../../plugins/summernote/summernote-bs4.js"></script>
+	<style type="text/css">
+		.loading {
+		  position: absolute;
+		  left: 50%;
+		  top: 70%;
+		  transform: translate(-50%,-50%);
+		  font: 14px arial;
+		}
+	</style>
+</head><body class='hold-transition skin-green-light sidebar-mini fixed '>
+	<div id='pesan'></div>
+	<div class='loader'>
+		<div class="loading">
+   	 <p id="pesanku" >Harap Tunggu</p>
+  	</div>
+	</div>
+	<div class='wrapper'>
+		
+		<header class='main-header'>
+			<a href='http://localhost:8899/guru/admin/' class='logo' style='background-color:#ffffff; border-bottom: 1px solid #eef2f6; border-right: 1px solid #eef2f6;'>
+	<span class='logo-mini'>
+		<img src="../../dist/img/logo34.png" height="30px" style="border-radius: 6px;">
+	</span>
+	<span class='logo-lg' style="display:flex; align-items:center; justify-content:center; gap:8px; font-weight:800; color:#0f172a; font-size:16px;">
+		<img src="../../dist/img/logo34.png" height="34px" style="border-radius: 8px;"> 
+		<span>Kemudi LMS</span>
+	</span>
+</a>
+<nav class='navbar navbar-static-top' style='background:#ffffff; border-bottom:1px solid #eef2f6;' role='navigation'>
+	<a href='#' class='sidebar-baru' data-toggle='offcanvas' role='button' title="Toggle Menu" style="color:#475569; padding: 15px 18px; font-size:16px;">
+		<i class="fa fa-bars"></i>
+	</a>
+	<div class='navbar-custom-menu'>
+		<ul class='nav navbar-nav' style="display:flex; align-items:center; margin-right:15px; gap:8px;">
+			<li class='hidden-xs'>
+				<span class="navbar-badge-pill" style="margin-top:10px; display:inline-flex;">
+					<i class="fa fa-school" style="color:#0284c7;"></i>
+					Kemudi LMS				</span>
+			</li>
+			<li>
+				<a href='http://localhost:8899/guru/login/log_out' class="btn btn-xs btn-danger" style="margin-top:10px; color:#ffffff !important; border-radius:8px; padding:6px 12px;" title="Keluar">
+					<i class="fa fa-sign-out"></i> Keluar
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>		</header>
+
+		<aside class='main-sidebar'>
+			<section class='sidebar'>
+	<ul class='sidebar-menu tree' data-widget='tree'>
+		<!-- Section: GENERAL -->
+		<li class="header jawara-nav-section">GENERAL</li>
+
+		<li class="active">
+			<a href='http://localhost:8899/guru/admin/'>
+				<i class="fa fa-home"></i>
+				<span>Overview</span>
+			</a>
+		</li>
+
+		<li class="">
+			<a href='http://localhost:8899/guru/admin/v_siswa'>
+				<i class="fa fa-user-graduate"></i>
+				<span>Data Siswa</span>
+			</a>
+		</li>
+
+					<li class='treeview '>
+				<a href='#'>
+					<i class="fa fa-tasks"></i>
+					<span>E-Learning</span>
+					<span class='pull-right-container'>
+						<i class='fa fa-angle-down pull-right'></i>
+					</span>
+				</a>
+				<ul class='treeview-menu'>
+					<li class=""><a href='http://localhost:8899/guru/admin/materi'><i class='fa fa-circle-notch'></i> Materi Belajar</a></li>
+					<li class=""><a href='http://localhost:8899/guru/admin/tugas'><i class='fa fa-circle-notch'></i> Tugas Siswa</a></li>
+				</ul>
+			</li>
+		
+		<li class='treeview '>
+			<a href='#'>
+				<i class="fa fa-file-alt"></i>
+				<span>Bank Soal</span>
+				<span class='pull-right-container'>
+					<i class='fa fa-angle-down pull-right'></i>
+				</span>
+			</a>
+			<ul class='treeview-menu'>
+				<li><a href='http://localhost:8899/guru/soal/daftar_soal'><i class='fa fa-circle-notch'></i> Daftar Soal Ujian</a></li>
+			</ul>
+		</li>
+
+		<li class="">
+			<a href='http://localhost:8899/guru/admin/daftar_ujian'>
+				<i class="fa fa-award"></i>
+				<span>Download Nilai</span>
+			</a>
+		</li>
+
+		<li class="">
+			<a href='http://localhost:8899/guru/admin/status_peserta'>
+				<i class="fa fa-shield-alt"></i>
+				<span>Status Peserta</span>
+			</a>
+		</li>
+
+		<!-- Section: OTHERS -->
+		<li class="header jawara-nav-section">OTHERS</li>
+
+		<li class='treeview'>
+			<a href='#'>
+				<i class="fa fa-chart-line"></i>
+				<span>Analisa</span>
+				<span class='pull-right-container'>
+					<i class='fa fa-angle-down pull-right'></i>
+				</span>
+			</a>
+			<ul class='treeview-menu'>
+				<li><a href='http://localhost:8899/guru/anso/daftar_soal'><i class='fa fa-circle-notch'></i> Analisa Per Soal</a></li>
+			</ul>
+		</li>
+
+		<li class="">
+			<a href='http://localhost:8899/guru/admin/no_ujian'>
+				<i class="fa fa-user-times"></i>
+				<span>Siswa Tidak Ujian</span>
+			</a>
+		</li>
+	</ul>
+
+	<!-- User Profile at bottom -->
+	<div class="jawara-sidebar-footer">
+		<img src='http://localhost:8899/guru/../dist/img/avatar-01.jpg' class='jawara-user-avatar' alt='Avatar'>
+		<div class="jawara-user-info footer-user-details">
+			<div class="jawara-user-name">
+				<span>Guru Pengajar</span>
+				<span class="jawara-role-pill">guru</span>
+			</div>
+			<div class="jawara-user-sub">Kemudi LMS</div>
+		</div>
+		<a href="http://localhost:8899/guru/login/log_out" class="btn-jawara-details footer-action-btn" title="Keluar" style="padding: 6px 10px;">
+			<i class="fa fa-sign-out"></i>
+		</a>
+	</div>
+</section>		</aside>
+		
+		<div class='content-wrapper'>
+			<section class='content' style="padding: 20px;">
+	<!-- JawaraCBT Campus Hero Banner -->
+	<div class="jawara-hero-wrapper">
+		<div class="jawara-hero-banner">
+			<img src="http://localhost:8899/guru/../dist/img/campus_banner.jpg" alt="Campus">
+			<div class="jawara-hero-overlay">
+				<h2 class="jawara-hero-title">Kemudi LMS</h2>
+				<div class="jawara-hero-sub">Kemudi LMS - Portal Guru & Tenaga Pendidik</div>
+			</div>
+		</div>
+		<!-- Search Bar -->
+		<div class="jawara-search-wrapper">
+			<i class="fa fa-search jawara-search-icon"></i>
+			<input type="text" id="guruSearch" class="jawara-search-input" placeholder="Search students, subjects, exams, materials, tasks..." onkeyup="filterJawaraDashboard(this.value)">
+		</div>
+	</div>
+
+	<!-- Main Stat Cards & Quick Actions -->
+	<div class="row">
+		<div class="col-lg-9 col-md-8">
+			<div class="row">
+				<!-- Card 1: Data Siswa -->
+				<div class="col-lg-6 col-md-6 col-sm-12" style="margin-bottom: 20px;">
+					<div class="jawara-card" style="min-height: 190px;">
+						<div class="jawara-stat-top">
+							<h4 class="jawara-stat-label">Total Students</h4>
+							<div class="jawara-icon-badge lime">
+								<i class="fa fa-user-graduate"></i>
+							</div>
+						</div>
+						<div>
+							<div class="jawara-stat-value" id="total_siswa_view">Siswa Aktif</div>
+							<div class="jawara-stat-desc">Peserta didik terdaftar</div>
+							<div class="jawara-stat-trend up">
+								<i class="fa fa-check"></i> Terhubung ke sistem
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Card 2: Materi -->
+				<div class="col-lg-6 col-md-6 col-sm-12" style="margin-bottom: 20px;">
+					<div class="jawara-card" style="min-height: 190px;">
+						<div class="jawara-stat-top">
+							<h4 class="jawara-stat-label">Materi Pembelajaran</h4>
+							<div class="jawara-icon-badge teal">
+								<i class="fa fa-book-reader"></i>
+							</div>
+						</div>
+						<div>
+							<div class="jawara-stat-value" id="jml_materi">-</div>
+							<div class="jawara-stat-desc">Total bahan ajar diunggah</div>
+							<div class="jawara-stat-trend up">
+								<i class="fa fa-cloud-upload-alt"></i> E-Learning aktif
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Card 3: Tugas -->
+				<div class="col-lg-6 col-md-6 col-sm-12" style="margin-bottom: 20px;">
+					<div class="jawara-card" style="min-height: 190px;">
+						<div class="jawara-stat-top">
+							<h4 class="jawara-stat-label">Tugas Terstruktur</h4>
+							<div class="jawara-icon-badge orange">
+								<i class="fa fa-tasks"></i>
+							</div>
+						</div>
+						<div>
+							<div class="jawara-stat-value" id="jml_tugas">-</div>
+							<div class="jawara-stat-desc">Tugas & latihan siswa</div>
+							<div class="jawara-stat-trend up">
+								<i class="fa fa-clock"></i> Aktif untuk kelas
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Card 4: Soal Ujian -->
+				<div class="col-lg-6 col-md-6 col-sm-12" style="margin-bottom: 20px;">
+					<div class="jawara-card" style="min-height: 190px;">
+						<div class="jawara-stat-top">
+							<h4 class="jawara-stat-label">Bank Soal & Ujian</h4>
+							<div class="jawara-icon-badge purple">
+								<i class="fa fa-file-alt"></i>
+							</div>
+						</div>
+						<div>
+							<div class="jawara-stat-value">CBT Ready</div>
+							<div class="jawara-stat-desc">Manajemen soal dan penilaian</div>
+							<div class="jawara-stat-trend neutral">
+								<i class="fa fa-layer-group"></i> Bank Soal Terpadu
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Quick Actions for Guru -->
+		<div class="col-lg-3 col-md-4 col-sm-12" style="margin-bottom: 20px;">
+			<div class="jawara-quick-actions-card" style="min-height: 400px;">
+				<h4 class="jawara-quick-title">Quick Actions</h4>
+				
+				<a href="http://localhost:8899/guru/soal/daftar_soal" class="btn-jawara-primary-action">
+					<i class="fa fa-plus"></i> Kelola Bank Soal
+				</a>
+
+				<a href="http://localhost:8899/guru/admin/materi" class="btn-jawara-secondary-action">
+					<i class="fa fa-book"></i> Materi Belajar
+				</a>
+
+				<a href="http://localhost:8899/guru/admin/tugas" class="btn-jawara-secondary-action">
+					<i class="fa fa-edit"></i> Tugas Siswa
+				</a>
+
+				<a href="http://localhost:8899/guru/admin/daftar_ujian" class="btn-jawara-secondary-action">
+					<i class="fa fa-award"></i> Download Nilai
+				</a>
+
+				<a href="http://localhost:8899/guru/admin/status_peserta" class="btn-jawara-secondary-action">
+					<i class="fa fa-desktop"></i> Status Peserta Ujian
+				</a>
+
+				<div style="margin-top:auto; padding-top:16px; border-top:1px solid #f1f5f9; text-align:center;">
+					<a href="clear_cache" class="btn btn-xs btn-default" style="width:100%; border-radius:8px;">
+						<i class="fa fa-sync-alt"></i> Clear Cache
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- School Details Card -->
+	<div class="row">
+		<div class="col-md-12">
+			<div class="jawara-card">
+				<div class="jawara-list-header">
+					<h4 class="jawara-list-title"><i class="fa fa-school" style="color:#1f4e5b; margin-right:8px;"></i> Informasi Sekolah & Kontak</h4>
+				</div>
+				<div class="row" style="padding-top: 10px;">
+					<div class="col-md-4" style="margin-bottom:12px;">
+						<strong style="color:#1e293b;"><i class="fa fa-building"></i> Nama Sekolah:</strong>
+						<div style="color:#64748b; margin-top:4px;">Kemudi LMS</div>
+					</div>
+					<div class="col-md-4" style="margin-bottom:12px;">
+						<strong style="color:#1e293b;"><i class="fa fa-map-marker-alt"></i> Alamat:</strong>
+						<div style="color:#64748b; margin-top:4px;">Jl.Pisang 163 Braja Sakti Way Jepara Lampung Timur </div>
+					</div>
+					<div class="col-md-4" style="margin-bottom:12px;">
+						<strong style="color:#1e293b;"><i class="fa fa-phone"></i> Telepon & Kontak:</strong>
+						<div style="color:#64748b; margin-top:4px;">021364213 | redis@candy.com</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script type="text/javascript">
+	$.getJSON('http://localhost:8899/guru/admin/materi_json', function(data) {
+		$.each(data, function(index,objek){
+			$('#jml_materi').html(objek);
+		});        
+	});
+	$.getJSON('http://localhost:8899/guru/admin/tugas_json', function(data) {
+		$.each(data, function(index,objek){
+			$('#jml_tugas').html(objek);
+		});        
+	});
+
+	function filterJawaraDashboard(query) {
+		query = query.toLowerCase();
+		$('.jawara-card, .btn-jawara-secondary-action').each(function() {
+			var text = $(this).text().toLowerCase();
+			if (text.indexOf(query) !== -1 || query === '') {
+				$(this).show();
+			} else {
+				$(this).hide();
+			}
+		});
+	}
+</script>
+		</div>
+		<footer class='main-footer hidden-xs'>
+			<div class='container'>
+	<div class='pull-left hidden-xs'>
+		<strong>
+			<span id='end-sidebar'>
+				&copy;2020 Kemudi LMS  Member Of Nusa Garuda Studio			</span>
+		</strong>
+	</div>
+		</footer>
+	
+	</div><!-- ./wrapper -->
+	
+	<script type="text/javascript">
+		$('.loader').fadeOut('slow');
+	</script>
+	<script src='../../dist/bootstrap/js/bootstrap.min.js'></script>
+	<script src='../../plugins/fastclick/fastclick.js'></script>
+	<script src='../../dist/js/adminlte.min.js'></script>
+	<script src='../../dist/js/app.min.js'></script>
+	<script src='../../plugins/datetimepicker/build/jquery.datetimepicker.full.min.js'></script>
+	<script src='../../plugins/slimScroll/jquery.slimscroll.min.js'></script>
+	<script src='../../plugins/iCheck/icheck.min.js'></script>
+	<script src='../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'></script>
+	<script src='../../plugins/select2/select2.min.js'></script>
+	<script src='../../plugins/tableedit/jquery.tabledit.js'></script>
+	<script src='../../plugins/toastr/toastr.min.js'></script>
+	<script src='../../plugins/notify/js/notify.js'></script>
+	<script src='../../plugins/slidemenu/jquery-slide-menu-admin.js'></script>
+	<script src='../../plugins/sweetalert2/dist/sweetalert2.min.js'></script>
+	<!-- <script src='../../plugins/MathJax-2.7.3/MathJax.js?config=TeX-AMS_HTML-full'></script> -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#summernote').summernote({
+				codeviewFilter: false,
+				codeviewIframeFilter: true,
+				focus,
+			});
+			$('.select2').select2();
+			$('.tgl').datetimepicker();
+			$('[data-toggle="tooltip"]').tooltip();
+		});
+	</script></body>
+</html>
