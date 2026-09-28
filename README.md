@@ -1,6 +1,6 @@
 # Kemudi LMS (Learning Management System & Computer Based Test)
 
-Kemudi LMS (sebelumnya dikenal sebagai Candy Redis V2.1.2) adalah aplikasi Ujian Berbasis Komputer (CBT) dan sistem manajemen pembelajaran terintegrasi yang dirancang untuk kebutuhan sekolah (PTS/PAS/USBN/Simulasi Ujian). Aplikasi ini dioptimalkan dengan Redis caching untuk menjamin performa tinggi saat menampung ribuan siswa secara bersamaan. testing
+Kemudi LMS (sebelumnya dikenal sebagai Candy Redis V2.1.2) adalah aplikasi Ujian Berbasis Komputer (CBT) dan sistem manajemen pembelajaran terintegrasi yang dirancang untuk kebutuhan sekolah (PTS/PAS/USBN/Simulasi Ujian). Aplikasi ini dioptimalkan dengan Redis caching untuk menjamin performa tinggi saat menampung ribuan siswa secara bersamaan. testingte
 
 ---
 
