@@ -16,7 +16,36 @@ if (strpos($project_root, $doc_root) === 0) {
 $relative_path = '/' . ltrim(str_replace('\\', '/', $relative_path), '/');
 $relative_path = rtrim($relative_path, '/');
 
-$homeurl = "http://" . $_SERVER['HTTP_HOST'] . $relative_path;
+// Deteksi protokol HTTPS
+$is_https = false;
+if (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') {
+    $is_https = true;
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https') {
+    $is_https = true;
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && strtolower($_SERVER['HTTP_X_FORWARDED_SSL']) === 'on') {
+    $is_https = true;
+} elseif (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) {
+    $is_https = true;
+} elseif (!empty($_SERVER['HTTP_CF_VISITOR']) && strpos($_SERVER['HTTP_CF_VISITOR'], 'https') !== false) {
+    $is_https = true;
+}
+
+// Deteksi Host dari HTTP_HOST atau X-Forwarded-Host
+$host = !empty($_SERVER['HTTP_X_FORWARDED_HOST']) ? $_SERVER['HTTP_X_FORWARDED_HOST'] : (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost');
+
+// Cek apakah lingkungan lokal (localhost / IP LAN)
+$is_local = preg_match('/^(localhost|127\.0\.0\.1|192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[0-1]))/i', $host);
+
+if (!$is_local) {
+    // Pada domain publik (seperti dash.kabingroup.my.id), hapus port internal seperti :4136
+    $host = preg_replace('/:\d+$/', '', $host);
+    // Domain publik default ke HTTPS
+    $protocol = "https://";
+} else {
+    $protocol = $is_https ? "https://" : "http://";
+}
+
+$homeurl = $protocol . $host . $relative_path;
 
 $subdirs = array_filter(explode('/', $relative_path));
 $shift = count($subdirs);

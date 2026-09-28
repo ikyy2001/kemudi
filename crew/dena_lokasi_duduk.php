@@ -36,8 +36,8 @@ if (date('m') >= 7 and date('m') <= 12) {
 
 
 function kartu ($am,$sesibudut,$rngbudut) {
+	global $homeurl;
 	require("../config/config.database2.php");
-	$homeurl = "http://" . $_SERVER['HTTP_HOST'];
 
 	$sqlam = mysqli_query($koneksi, "SELECT * from 
 	(SELECT * from siswa where sesi ='$sesibudut' and ruang='$rngbudut' order by id_siswa  limit $am) as ambil 
