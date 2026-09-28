@@ -179,7 +179,7 @@ foreach ($daa1 as $value) {
 				$_SESSION['username'] = $_POST['username'];
 				$_SESSION['password'] = $_POST['password'];
 				$_SESSION['token_bot_telegram'] = $token_bot['botToken'];
-				echo "<script>location.href = '.';</script>";
+				echo "<script>location.href = 'index.php';</script>";
 			}
 		} 
 		elseif ($user['level'] == 'peng') {
@@ -193,7 +193,7 @@ foreach ($daa1 as $value) {
 				$_SESSION['token'] = $ceks['db_token'];
 				$_SESSION['token1'] = $ceks['db_token1'];
 				$_SESSION['token_bot_telegram'] = $token_bot['botToken'];
-				echo "<script>location.href = '.';</script>";
+				echo "<script>location.href = 'index.php';</script>";
 			}
 		}
 		elseif ($user['level'] == 'guru') {
@@ -209,7 +209,7 @@ foreach ($daa1 as $value) {
 				$_SESSION['token1'] = $ceks['db_token1'];
 				$_SESSION['token_bot_telegram'] = $token_bot['botToken'];
 
-				echo "<script>location.href = '.';</script>";
+				echo "<script>location.href = 'index.php';</script>";
 			} else {
 				$info = info("Password salah!", "NO");
 			}
