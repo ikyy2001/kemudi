@@ -34,13 +34,13 @@ $db->DelRedisAll();
           </p>
         </div><!-- /.box-body -->
         <div class='box-footer'>
-          <a href='importdatasoal.xls'><i class='fa fa-file-excel-o'></i> Download Format</a>
+          <a href='<?= $homeurl ?>/crew/importdatasoal.xls' class='btn btn-xs btn-primary'><i class='fa fa-file-excel'></i> Download Format Excel (.xls)</a>
         </div>
       </div><!-- /.box -->
     </form>
   </div>
   <div class='col-md-6'>   <!--  -->
-    <form id="formsoalword" action='<?= $homeurl ?>/<?= $crew ?>/import/index.php/word_import' method='post' enctype='multipart/form-data'>
+    <form id="formsoalword" action='<?= $homeurl ?>/crew/import/index.php/word_import' method='post' enctype='multipart/form-data'>
       <div class='box box-solid'>
         <div class='box-header with-border'>
           <h3 class='box-title'>Import Soal Ms Word</h3>
@@ -101,10 +101,10 @@ $db->DelRedisAll();
             Sebelum meng-import pastikan file yang akan anda import sudah dalam bentuk Ms. Word (.docx) dan format penulisan harus sesuai dengan yang telah ditentukan. <br />
           </p>
         </div><!-- /.box-body -->
-        <div class='box-footer'>
-          <a href='<?= $homeurl ?>/<?= $crew ?>/import/sample/contoh_soal_pg.docx'><i class='fa fa-file-word-o'></i> Download Format Soal PG</a><br>
-          <a href='<?= $homeurl ?>/<?= $crew ?>/import/sample/contoh_soal_pg_esai.docx'><i class='fa fa-file-word-o'></i> Download Format Soal PG ESAI</a><br>
-          <a href='<?= $homeurl ?>/<?= $crew ?>/import/sample/contoh_soal_esai.docx'><i class='fa fa-file-word-o'></i> Download Format Soal ESAI</a><br>
+        <div class='box-footer' style="display:flex; flex-direction:column; gap:6px;">
+          <a href='<?= $homeurl ?>/crew/import/sample/contoh_soal_pg.docx' class='btn btn-xs btn-primary'><i class='fa fa-file-word'></i> Download Format Soal PG (.docx)</a>
+          <a href='<?= $homeurl ?>/crew/import/sample/contoh_soal_pg_esai.docx' class='btn btn-xs btn-primary'><i class='fa fa-file-word'></i> Download Format Soal PG ESAI (.docx)</a>
+          <a href='<?= $homeurl ?>/crew/import/sample/contoh_soal_esai.docx' class='btn btn-xs btn-primary'><i class='fa fa-file-word'></i> Download Format Soal ESAI (.docx)</a>
         </div>
         <br />
       </div><!-- /.box -->

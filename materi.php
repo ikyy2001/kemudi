@@ -144,9 +144,66 @@ elseif ($_GET['pg']=='guru') { ?>
 <?php
 }
 elseif($_GET['pg']=='baca'){ ?>
+<style type="text/css">
+  .materi-scroll-box {
+    max-height: 68vh;
+    min-height: 250px;
+    overflow-y: auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+  }
+  .materi-scroll-box::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .materi-scroll-box::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 6px;
+  }
+  .materi-scroll-box::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 6px;
+  }
+  .materi-scroll-box::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+  .materi-scroll-box img {
+    max-width: 100% !important;
+    height: auto !important;
+    border-radius: 8px;
+  }
+  .materi-scroll-box table {
+    max-width: 100% !important;
+  }
+  .materi-isi-content {
+    font-size: 15px;
+    line-height: 1.85;
+    color: inherit;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  .dark-mode-scroll {
+    background-color: #2b2c30 !important;
+    border-color: #44474e !important;
+    color: #e2e8f0 !important;
+  }
+  .dark-mode-scroll::-webkit-scrollbar-track {
+    background: #1e1f23 !important;
+  }
+  .dark-mode-scroll::-webkit-scrollbar-thumb {
+    background: #4a4d56 !important;
+  }
+</style>
 <div class='row'>
   <div class='col-md-12' >
-    <div class='box box-solid' id="box-baca">
+    <div class='box box-solid' id="box-baca" style="overflow: visible !important;">
       <div class='box-header with-border'>
         <h3 class='box-title'><i class="fas fa-edit "></i> Membaca Materi</h3>
       </div>
@@ -175,9 +232,11 @@ elseif($_GET['pg']=='baca'){ ?>
              foreach ($da2 as $value) { ?>
               <h2 style="color: #3c8dbc;" ><?= $value->materi2_judul; ?></h2>
               <hr>
-              <p class="text-justify" >
-                <?= $value->materi2_isi; ?>
-              </p>
+              <div class="materi-scroll-box" id="materi-scroll-box">
+                <div class="materi-isi-content text-justify">
+                  <?= $value->materi2_isi; ?>
+                </div>
+              </div>
               <hr>
               <br>
               <blockquote class="blockquote">
@@ -211,22 +270,28 @@ elseif($_GET['pg']=='baca'){ ?>
 </div>
 <script type="text/javascript">
   $(document).ready(function() {
+    // Pastikan halaman dan container bisa discroll lancar
+    document.body.style.overflowY = "auto";
+
     //Agar Video Summoner editor responsif
-        jQuery('.note-video-clip').each(function(){
-            var tmp = jQuery(this).wrap('<p/>').parent().html();
-            jQuery(this).parent().html('<div class="embed-responsive embed-responsive-16by9">'+tmp+'</div>');
-          });
+    jQuery('.note-video-clip').each(function(){
+      var tmp = jQuery(this).wrap('<p/>').parent().html();
+      jQuery(this).parent().html('<div class="embed-responsive embed-responsive-16by9">'+tmp+'</div>');
+    });
+
     var toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
     function switchTheme(e) {
       if (e.target.checked) {
         localStorage.setItem('theme',1); 
         $("#box-baca").css("background-color","rgb(53, 54, 58)");
         $("#box-baca").css("color","rgb(232, 234, 237)");
+        $("#materi-scroll-box").addClass("dark-mode-scroll");
       }
       else {
         localStorage.setItem('theme',0); 
         $("#box-baca").css("background-color","#ffffff");
         $("#box-baca").css("color","black");
+        $("#materi-scroll-box").removeClass("dark-mode-scroll");
       }    
     }
     toggleSwitch.addEventListener('change', switchTheme, false);
@@ -236,11 +301,12 @@ elseif($_GET['pg']=='baca'){ ?>
       toggleSwitch.checked = true;
       $("#box-baca").css("background-color","rgb(53, 54, 58)");
       $("#box-baca").css("color","rgb(232, 234, 237)");
-
+      $("#materi-scroll-box").addClass("dark-mode-scroll");
     }
     else {
       $("#box-baca").css("background-color","#ffffff");
       $("#box-baca").css("color","black");
+      $("#materi-scroll-box").removeClass("dark-mode-scroll");
       toggleSwitch.checked = false;
     }   
   });

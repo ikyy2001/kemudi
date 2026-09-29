@@ -55,15 +55,7 @@ $shift = count($subdirs);
 (isset($pageurl[2 + $shift])) ? $ac = $pageurl[2 + $shift] : $ac = '';
 (isset($pageurl[3 + $shift])) ? $id = $pageurl[3 + $shift] : $id = 0;
 
-// Redirect /guru atau /crew jika diakses tanpa trailing slash
-if ($pg === 'guru') {
-    header("Location: " . $homeurl . "/guru/");
-    exit();
-}
-if ($pg === 'crew') {
-    header("Location: " . $homeurl . "/crew/");
-    exit();
-}
+
 
 // Support routing via query string jika dipanggil index.php?pg=...
 if (($pg === '' || $pg === 'index.php') && !empty($_GET['pg'])) {

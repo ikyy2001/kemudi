@@ -13,6 +13,9 @@ class Word_import extends CI_Controller {
  function index($limit='0',$cid='0')
  {
   $logged_in=$this->session->userdata('beeuser');		
+  if (!is_dir('./upload/')) {
+    @mkdir('./upload/', 0777, true);
+  }
   $config['upload_path']          = './upload/';
   $config['allowed_types']        = 'docx';
   $config['max_size']             = 10000;
