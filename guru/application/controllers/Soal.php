@@ -134,6 +134,205 @@ class Soal extends CI_Controller {
 		
 		$this->load->view('admin',$data);
 	}
+	function import_excel(){
+		$autoload_path = FCPATH . "../vendor/autoload.php";
+		if (file_exists($autoload_path)) {
+			require_once $autoload_path;
+		}
+		require_once(FCPATH . "../config/excel_reader2.php");
+
+		if (isset($_FILES['file']['name']) && !empty($_FILES['file']['tmp_name'])) {
+			$id_mapel = isset($_POST['id_mapel']) ? $_POST['id_mapel'] : '';
+			$dec = decrypt_url($id_mapel);
+			if ($dec !== false && $dec !== '') {
+				$id_mapel = $dec;
+			}
+			$file = $_FILES['file']['name'];
+			$temp = $_FILES['file']['tmp_name'];
+			$ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+
+			if ($ext !== 'xls' && $ext !== 'xlsx') {
+				echo "Harap pilih file excel berformat .xls atau .xlsx";
+				return;
+			}
+
+			$rows = array();
+			// Method 1: PhpSpreadsheet for .xlsx and .xls
+			if (class_exists('\PhpOffice\PhpSpreadsheet\IOFactory')) {
+				try {
+					$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($temp);
+					$sheet = $spreadsheet->getActiveSheet();
+					$sheetData = $sheet->toArray(null, true, true, false);
+					if (!empty($sheetData) && count($sheetData) > 1) {
+						foreach ($sheetData as $r_idx => $r_val) {
+							if ($r_idx === 0) continue; // Skip header
+							$rows[] = array(
+								'no'      => isset($r_val[0]) ? trim((string)$r_val[0]) : '',
+								'soal'    => isset($r_val[1]) ? trim((string)$r_val[1]) : '',
+								'pilA'    => isset($r_val[2]) ? trim((string)$r_val[2]) : '',
+								'pilB'    => isset($r_val[3]) ? trim((string)$r_val[3]) : '',
+								'pilC'    => isset($r_val[4]) ? trim((string)$r_val[4]) : '',
+								'pilD'    => isset($r_val[5]) ? trim((string)$r_val[5]) : '',
+								'pilE'    => isset($r_val[6]) ? trim((string)$r_val[6]) : '',
+								'jawaban' => isset($r_val[7]) ? strtoupper(trim((string)$r_val[7])) : '',
+								'jenis'   => isset($r_val[8]) ? trim((string)$r_val[8]) : '1',
+								'file1'   => isset($r_val[9]) ? trim((string)$r_val[9]) : '',
+								'file2'   => isset($r_val[10]) ? trim((string)$r_val[10]) : '',
+								'fileA'   => isset($r_val[11]) ? trim((string)$r_val[11]) : '',
+								'fileB'   => isset($r_val[12]) ? trim((string)$r_val[12]) : '',
+								'fileC'   => isset($r_val[13]) ? trim((string)$r_val[13]) : '',
+								'fileD'   => isset($r_val[14]) ? trim((string)$r_val[14]) : '',
+								'fileE'   => isset($r_val[15]) ? trim((string)$r_val[15]) : '',
+							);
+						}
+					}
+				} catch (Exception $e) {
+					// Fallback below
+				}
+			}
+
+			// Method 2: Spreadsheet_Excel_Reader fallback for .xls
+			if (empty($rows) && $ext === 'xls') {
+				error_reporting(0);
+				$data = new Spreadsheet_Excel_Reader($temp);
+				$hasildata = $data->rowcount(0);
+				for ($i = 2; $i <= $hasildata; $i++) {
+					$rows[] = array(
+						'no'      => trim((string)$data->val($i, 1)),
+						'soal'    => trim((string)$data->val($i, 2)),
+						'pilA'    => trim((string)$data->val($i, 3)),
+						'pilB'    => trim((string)$data->val($i, 4)),
+						'pilC'    => trim((string)$data->val($i, 5)),
+						'pilD'    => trim((string)$data->val($i, 6)),
+						'pilE'    => trim((string)$data->val($i, 7)),
+						'jawaban' => strtoupper(trim((string)$data->val($i, 8))),
+						'jenis'   => trim((string)$data->val($i, 9)),
+						'file1'   => trim((string)$data->val($i, 10)),
+						'file2'   => trim((string)$data->val($i, 11)),
+						'fileA'   => trim((string)$data->val($i, 12)),
+						'fileB'   => trim((string)$data->val($i, 13)),
+						'fileC'   => trim((string)$data->val($i, 14)),
+						'fileD'   => trim((string)$data->val($i, 15)),
+						'fileE'   => trim((string)$data->val($i, 16)),
+					);
+				}
+			}
+
+			if (empty($rows)) {
+				echo "Gagal membaca isi file excel atau file excel kosong!";
+				return;
+			}
+
+			$sukses = 0;
+			$gagal = 0;
+			
+			$this->db->delete('soal', array('id_mapel' => $id_mapel));
+			$this->db->delete('file_pendukung', array('id_mapel' => $id_mapel));
+			
+			foreach ($rows as $idx => $r) {
+				$nomor_soal = !empty($r['no']) ? $r['no'] : ($idx + 1);
+				$soal = $r['soal'];
+				$pilA = $r['pilA'];
+				$pilB = $r['pilB'];
+				$pilC = $r['pilC'];
+				$pilD = $r['pilD'];
+				$pilE = $r['pilE'];
+				$jawaban = strtoupper($r['jawaban']);
+				$jenis = !empty($r['jenis']) ? $r['jenis'] : '1';
+				$file1 = $r['file1'];
+				$file2 = $r['file2'];
+				$fileA = $r['fileA'];
+				$fileB = $r['fileB'];
+				$fileC = $r['fileC'];
+				$fileD = $r['fileD'];
+				$fileE = $r['fileE'];
+				
+				if (!empty($soal)) {
+					$insert_data = array(
+						'id_mapel' => $id_mapel,
+						'nomor'    => $nomor_soal,
+						'soal'     => $soal,
+						'pilA'     => $pilA,
+						'pilB'     => $pilB,
+						'pilC'     => $pilC,
+						'pilD'     => $pilD,
+						'pilE'     => $pilE,
+						'jawaban'  => $jawaban,
+						'jenis'    => $jenis,
+						'file'     => $file1,
+						'file1'    => $file2,
+						'fileA'    => $fileA,
+						'fileB'    => $fileB,
+						'fileC'    => $fileC,
+						'fileD'    => $fileD,
+						'fileE'    => $fileE
+					);
+					$exec = $this->db->insert('soal', $insert_data);
+					if ($exec) {
+						$sukses++;
+						$files = array($file1, $file2, $fileA, $fileB, $fileC, $fileD, $fileE);
+						foreach ($files as $f) {
+							if (!empty($f)) {
+								$this->db->insert('file_pendukung', array('nama_file' => $f, 'id_mapel' => $id_mapel));
+							}
+						}
+					} else {
+						$gagal++;
+					}
+				} else {
+					$gagal++;
+				}
+			}
+			$this->clear_cache();
+			$total = count($rows);
+			echo "Berhasil: $sukses | Gagal: $gagal | Total: $total";
+		} else {
+			echo "File tidak ditemukan!";
+		}
+	}
+	function import_file(){
+		if (isset($_FILES['zip_file']['name'])) {
+			$file_name = $_FILES['zip_file']['name'];
+			$ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+			$allowed_ext_program = array('php','phtml','php3','php4','php5','php7','phps','js','htaccess');
+			if ($ext == 'zip') {
+				$path = FCPATH . '../files/';
+				if (!is_dir($path)) {
+					@mkdir($path, 0777, true);
+				}
+				$location = $path . $file_name;
+				if (move_uploaded_file($_FILES['zip_file']['tmp_name'], $location)) {
+					$zip = new ZipArchive;
+					if ($zip->open($location) === TRUE) {
+						$cekno = 0;
+						for ($i = 0; $i < $zip->numFiles; $i++) {
+							$file_ext = strtolower(pathinfo($zip->getNameIndex($i), PATHINFO_EXTENSION));
+							if (in_array($file_ext, $allowed_ext_program)) {
+								$cekno++;
+							}
+						}
+						if ($cekno > 0) {
+							@unlink($location);
+							echo 'BAHAYA';
+						} else {
+							$zip->extractTo($path);
+							$zip->close();
+							@unlink($location);
+							echo 'OK';
+						}
+					} else {
+						echo 'Gagal membuka file ZIP';
+					}
+				} else {
+					echo 'Gagal mengunggah file';
+				}
+			} else {
+				echo 'Harap unggah file arsip berformat .zip';
+			}
+		} else {
+			echo 'File tidak ditemukan';
+		}
+	}
 	function hapus_soal_id(){
 		$id = $_POST['id'];
 		$soal = $this->soal->select_soal_id($id);

@@ -44,7 +44,7 @@
         <div class='box-body'>
           <div class='form-group'>
             <label>Mata Pelajaran</label>
-            <input type='hidden' name='id_mapel' class='form-control' value="<?= $_GET['idmapel'] ?>" />
+            <input type='hidden' name='id_mapel' class='form-control' value="<?= encrypt_url($mapel['id_mapel']) ?>" />
             <input type='text' name='mapel' class='form-control' value="<?= $mapel['nama'] ?>" disabled />
           </div>
           <tr>
@@ -139,3 +139,88 @@
     </div>
   </div>
 </div>
+
+<script>
+  function notify(pesan) {
+    if (typeof toastr !== 'undefined') {
+      toastr.success(pesan);
+    } else {
+      alert(pesan);
+    }
+  }
+
+  function notifygagal(pesan) {
+    if (typeof toastr !== 'undefined') {
+      toastr.error(pesan);
+    } else {
+      alert(pesan);
+    }
+  }
+
+  // IMPORT SOAL EXCEL
+  $('#formsoalcandy').on('submit', function(e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    $.ajax({
+      type: 'post',
+      url: '<?= base_url("soal/import_excel") ?>',
+      data: formData,
+      processData: false,
+      contentType: false,
+      cache: false,
+      beforeSend: function() {
+        if ($('.loader').length) { $('.loader').css('display', 'block'); }
+      },
+      success: function(response) {
+        if ($('.loader').length) { $('.loader').css('display', 'none'); }
+        $('#boxpesan').html('<div class="alert alert-info">' + response + '</div>');
+        if (response.indexOf('Berhasil') !== -1) {
+          notify(response);
+          setTimeout(function() {
+            window.location.href = '<?= base_url("soal/lihat_soal?idmapel=" . encrypt_url($mapel["id_mapel"])) ?>';
+          }, 1500);
+        } else {
+          notifygagal(response);
+        }
+      },
+      error: function(xhr, status, error) {
+        if ($('.loader').length) { $('.loader').css('display', 'none'); }
+        notifygagal('Terjadi kesalahan koneksi server');
+      }
+    });
+  });
+
+  // IMPORT FILE PENDUKUNG (ZIP)
+  $('#formfilesoal').on('submit', function(e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    $.ajax({
+      type: 'post',
+      url: '<?= base_url("soal/import_file") ?>',
+      data: formData,
+      processData: false,
+      contentType: false,
+      cache: false,
+      beforeSend: function() {
+        if ($('.loader').length) { $('.loader').css('display', 'block'); }
+      },
+      success: function(response) {
+        if ($('.loader').length) { $('.loader').css('display', 'none'); }
+        if (response == 'OK') {
+          notify('File pendukung berhasil diekstrak');
+          $('#boxpesan').html('<div class="alert alert-success">File pendukung berhasil diupload dan diekstrak ke folder files.</div>');
+        } else if (response == 'BAHAYA') {
+          notifygagal('Terdapat file berbahaya di dalam ZIP!');
+          $('#boxpesan').html('<div class="alert alert-danger">Upload dibatalkan karena terdeteksi file script berbahaya.</div>');
+        } else {
+          notifygagal(response);
+          $('#boxpesan').html('<div class="alert alert-warning">' + response + '</div>');
+        }
+      },
+      error: function() {
+        if ($('.loader').length) { $('.loader').css('display', 'none'); }
+        notifygagal('Gagal mengupload file pendukung');
+      }
+    });
+  });
+</script>

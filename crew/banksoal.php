@@ -85,7 +85,7 @@ aksi
           'id_mapel' =>$id
         );
         $exec = $db->update('mapel',$data,$where);
-        if($exec==1){
+        if($exec != 1){
           $info = info("Gagal menyimpan!", "NO");
         }
         else{
@@ -810,171 +810,65 @@ aksi
               <?php
               $id_mapel = $_GET['id'];
               if (isset($_REQUEST['tambah'])) {
-                $sip = $_SERVER['SERVER_NAME'];
-                $smax = mysqli_query($koneksi, "SELECT max(qid) AS maxi FROM savsoft_qbank");
-                while ($hmax = mysqli_fetch_array($smax)) :
-                  $jumsoal = $hmax['maxi'];
-                endwhile;
-                $smaop = mysqli_query($koneksi, "SELECT max(oid) AS maxop FROM savsoft_options");
-                while ($hmaop = mysqli_fetch_array($smaop)) {
-                  $jumop = $hmaop['maxop'];
-                }
-
-                $b_op = ($jumop != 0) ? ($jumop / $jumsoal) : 0;
                 $no = 1;
                 $noesai = 1;
-                $sqlcek = mysqli_query($koneksi, "SELECT * FROM savsoft_qbank");
+                $sqlcek = mysqli_query($koneksi, "SELECT * FROM savsoft_qbank ORDER BY qid ASC");
                 while ($r = mysqli_fetch_array($sqlcek)) {
-                  $s_soal = mysqli_fetch_array(mysqli_query($koneksi, "select * from savsoft_qbank where qid='$no'"));
-                  $soal_tanya = $s_soal['question'];
-                  $l_soal = $s_soal['lid'];
-                  $c_id = $s_soal['cid'];
-                  $g_soal = $s_soal['description'];
-                  $g_soal = str_replace(" ", "", $g_soal);
-                  $smin = mysqli_query($koneksi, " select min(oid) as mini from savsoft_options where qid='$no'");
-                  while ($hmin = mysqli_fetch_array($smin)) {
-                    $min_op = $hmin['mini'];
-                  }
-                  $sqlopc = mysqli_query($koneksi, " select * from savsoft_options where qid='$no' and oid='$min_op'");
-                  $ropc = mysqli_fetch_array($sqlopc);
-                  $opj1 = $ropc['q_option'];
-                  $opj1 = str_replace(" &ndash;", "-", $opj1);
-                  $opj1 = str_replace(" &amp;lt;br&amp;gt;", "<br>", $opj1);
-                  $opj1 = str_replace("&amp;lt;br&amp;gt;", "<br>", $opj1);
-                  $opjs1 = $ropc['score'];
-                  $fileA = $ropc['q_option_match'];
-                  $fileA = str_replace(" ", "", $fileA);
+                  $qid = $r['qid'];
+                  $soal_tanya = $r['question'];
+                  $g_soal = str_replace(" ", "", $r['description'] ?? '');
 
-                  $dele = mysqli_query($koneksi, "DELETE FROM savsoft_options WHERE qid='$no' AND oid='$min_op'");
-
-                  $smin = mysqli_query($koneksi, " select min(oid) as mini from savsoft_options where qid='$no'");
-                  while ($hmin = mysqli_fetch_array($smin)) {
-                    $min_op = $hmin['mini'];
-                  }
-
-                  $sqlopc = mysqli_query($koneksi, " select * from savsoft_options where qid='$no' and oid='$min_op'");
-                  $rubah = mysqli_query($koneksi, " select * from savsoft_options where qid='$no'");
-                  $ck_jum = mysqli_num_rows($rubah);
-
-                  $ropc = mysqli_fetch_array($sqlopc);
-                  $opj2 = $ropc['q_option'];
-                  $opj2 = str_replace(" &ndash;", "-", $opj2);
-                  $opj2 = str_replace(" &amp;lt;br&amp;gt;", "<br>", $opj2);
-                  $opj2 = str_replace("&amp;lt;br&amp;gt;", "<br>", $opj2);
-                  $opjs2 = $ropc['score'];
-                  $fileB = $ropc['q_option_match'];
-                  $fileB = str_replace(" ", "", $fileB);
-                  $dele = mysqli_query($koneksi, " delete from savsoft_options where qid='$no' and oid='$min_op'");
-                  $smin = mysqli_query($koneksi, " select min(oid) as mini from savsoft_options where qid='$no'");
-                  while ($hmin = mysqli_fetch_array($smin)) {
-                    $min_op = $hmin['mini'];
-                  }
-                  $sqlopc = mysqli_query($koneksi, " select * from savsoft_options where qid='$no' and oid='$min_op'");
-                  $ropc = mysqli_fetch_array($sqlopc);
-                  $opj3 = $ropc['q_option'];
-                  $opj3 = str_replace(" &ndash;", "-", $opj3);
-                  $opj3 = str_replace(" &amp;lt;br&amp;gt;", "<br>", $opj3);
-                  $opj3 = str_replace("&amp;lt;br&amp;gt;", "<br>", $opj3);
-                  $opjs3 = $ropc['score'];
-                  $fileC = $ropc['q_option_match'];
-                  $fileC = str_replace(" ", "", $fileC);
-                  $dele = mysqli_query($koneksi, " delete from savsoft_options where qid='$no' and oid='$min_op'");
-                  $smin = mysqli_query($koneksi, " select min(oid) as mini from savsoft_options where qid='$no'");
-                  while ($hmin = mysqli_fetch_array($smin)) {
-                    $min_op = $hmin['mini'];
-                  }
-
-                  $sqlopc = mysqli_query($koneksi, " select * from savsoft_options where qid='$no' and oid='$min_op'");
-                  $ropc = mysqli_fetch_array($sqlopc);
-                  $opj4 = $ropc['q_option'];
-                  $opj4 = str_replace(" &ndash;", "-", $opj4);
-                  $opj4 = str_replace(" &amp;lt;br&amp;gt;", "<br>", $opj4);
-                  $opj4 = str_replace("&amp;lt;br&amp;gt;", "<br>", $opj4);
-                  $opjs4 = $ropc['score'];
-                  $fileD = $ropc['q_option_match'];
-                  $fileD = str_replace(" ", "", $fileD);
-                  $dele = mysqli_query($koneksi, " delete from savsoft_options where qid='$no' and oid='$min_op'");
-                  $smin = mysqli_query($koneksi, " select min(oid) as mini from savsoft_options where qid='$no'");
-                  while ($hmin = mysqli_fetch_array($smin)) {
-                    $min_op = $hmin['mini'];
-                  }
-
-                  $sqlopc = mysqli_query($koneksi, " select * from savsoft_options where qid='$no' and oid='$min_op'");
-                  $ropc = mysqli_fetch_array($sqlopc);
-                  $opj5 = $ropc['q_option'];
-                  $opj5 = str_replace(" &ndash;", "-", $opj5);
-                  $opj5 = str_replace(" &amp;lt;br&amp;gt;", "<br>", $opj5);
-                  $opj4 = str_replace("&amp;lt;br&amp;gt;", "<br>", $opj4);
-                  $opjs5 = $ropc['score'];
-                  $fileE = $ropc['q_option_match'];
-                  $fileE = str_replace(" ", "", $fileE);
-                  $dele = mysqli_query($koneksi, " delete from savsoft_options where qid='$no' and oid='$min_op'");
-                  if ($opjs1 == 1) {
-                    $kunci = "A";
-                  }
-                  if ($opjs2 == 1) {
-                    $kunci = "B";
-                  }
-                  if ($opjs3 == 1) {
-                    $kunci = "C";
-                  }
-                  if ($opjs4 == 1) {
-                    $kunci = "D";
-                  }
-                  if ($opjs5 == 1) {
-                    $kunci = "E";
-                  }
-                  if ($ck_jum !== 0) {
-                    $jns = "1";
-                  }
-                  if ($ck_jum == 0) {
-                    $jns = "2";
-                  }
-        // $jwb522 = str_replace("&amp;lt;", "<", $jwb521);
-        // $jwb422 = str_replace("&amp;lt;", "<", $jwb421);
-        // $jwb322 = str_replace("&amp;lt;", "<", $jwb321);
-        // $jwb222 = str_replace("&amp;lt;", "<", $jwb221);
-        // $jwb122 = str_replace("&amp;lt;", "<", $jwb121);
                   $soal_tanya = str_replace("&amp;lt;", "<", $soal_tanya);
-        // $jwb52 = str_replace("&amp;gt;", ">", $jwb522);
-        // $jwb42 = str_replace("&amp;gt;", ">", $jwb422);
-        // $jwb32 = str_replace("&amp;gt;", ">", $jwb322);
-        // $jwb22 = str_replace("&amp;gt;", ">", $jwb222);
-        // $jwb12 = str_replace("&amp;gt;", ">", $jwb122);
                   $soal_tanya = str_replace("&amp;gt;", ">", $soal_tanya);
+                  $soal_tanya = str_replace("&amp;quot;", '"', $soal_tanya);
+                  $soal_tanya = str_replace("&#34;", '"', $soal_tanya);
                   $soal_tanya = str_replace(" &amp;lt;br&amp;gt;", "<br>", $soal_tanya);
                   $soal_tanya = str_replace("&amp;lt;br&amp;gt;", "<br>", $soal_tanya);
-                  //meryes ---- 4/4/21 ------
-                  if($jns ==1 ){
-                    $exec = mysqli_query($koneksi, "INSERT INTO soal (id_mapel,nomor,soal,pilA,pilB,pilC,pilD,pilE,jawaban,jenis,file1,fileA,fileB,fileC,fileD,fileE) VALUES ('$id_mapel','$no','$soal_tanya','$opj1','$opj2','$opj3','$opj4','$opj5','$kunci','$jns','$g_soal','$fileA','$fileB','$fileC','$fileD','$fileE')");
+
+                  $options_q = mysqli_query($koneksi, "SELECT * FROM savsoft_options WHERE qid='$qid' ORDER BY oid ASC");
+                  $ck_jum = mysqli_num_rows($options_q);
+
+                  $opj = array('', '', '', '', '');
+                  $files = array('', '', '', '', '');
+                  $kunci = '';
+                  $alphabet = array('A', 'B', 'C', 'D', 'E');
+
+                  if ($ck_jum > 0) {
+                    $jns = '1';
+                    $idx = 0;
+                    while ($opt = mysqli_fetch_array($options_q)) {
+                      if ($idx < 5) {
+                        $text = str_replace(" &ndash;", "-", $opt['q_option']);
+                        $text = str_replace("&amp;lt;", "<", $text);
+                        $text = str_replace("&amp;gt;", ">", $text);
+                        $text = str_replace("&amp;lt;br&amp;gt;", "<br>", $text);
+                        $opj[$idx] = mysqli_real_escape_string($koneksi, $text);
+                        $files[$idx] = str_replace(" ", "", $opt['q_option_match'] ?? '');
+                        if ($opt['score'] > 0) {
+                          $kunci = $alphabet[$idx];
+                        }
+                        $idx++;
+                      }
+                    }
+                  } else {
+                    $jns = '2'; // Esai
                   }
-                  else{
-                    $noesai1 = $noesai++;
-                    $exec = mysqli_query($koneksi, "INSERT INTO soal (id_mapel,nomor,soal,pilA,pilB,pilC,pilD,pilE,jawaban,jenis,file1,fileA,fileB,fileC,fileD,fileE) VALUES ('$id_mapel','$noesai1','$soal_tanya','$opj1','$opj2','$opj3','$opj4','$opj5','$kunci','$jns','$g_soal','$fileA','$fileB','$fileC','$fileD','$fileE')");
+
+                  $nomor_soal = ($jns == '1') ? $no++ : $noesai++;
+                  $soal_escaped = mysqli_real_escape_string($koneksi, $soal_tanya);
+
+                  $exec = mysqli_query($koneksi, "INSERT INTO soal (id_mapel,nomor,soal,pilA,pilB,pilC,pilD,pilE,jawaban,jenis,file,file1,fileA,fileB,fileC,fileD,fileE) VALUES ('$id_mapel','$nomor_soal','$soal_escaped','$opj[0]','$opj[1]','$opj[2]','$opj[3]','$opj[4]','$kunci','$jns','$g_soal','','$files[0]','$files[1]','$files[2]','$files[3]','$files[4]')");
+
+                  $all_files = array_filter(array_merge(array($g_soal), $files));
+                  foreach ($all_files as $af) {
+                    if (!empty($af)) {
+                      $af_escaped = mysqli_real_escape_string($koneksi, $af);
+                      mysqli_query($koneksi, "INSERT INTO file_pendukung (nama_file,id_mapel) VALUES ('$af_escaped','$id_mapel')");
+                    }
                   }
-                  
-                  if ($g_soal <> "") {
-                    $file = mysqli_query($koneksi, "INSERT INTO file_pendukung (nama_file,id_mapel) values ('$g_soal','$id_mapel')");
-                  }
-                  if ($fileA <> "") {
-                    $file = mysqli_query($koneksi, "INSERT INTO file_pendukung (nama_file,id_mapel) values ('$fileA','$id_mapel')");
-                  }
-                  if ($fileB <> "") {
-                    $file = mysqli_query($koneksi, "INSERT INTO file_pendukung (nama_file,id_mapel) values ('$fileB','$id_mapel')");
-                  }
-                  if ($fileC <> "") {
-                    $file = mysqli_query($koneksi, "INSERT INTO file_pendukung (nama_file,id_mapel) values ('$fileC','$id_mapel')");
-                  }
-                  if ($fileD <> "") {
-                    $file = mysqli_query($koneksi, "INSERT INTO file_pendukung (nama_file,id_mapel) values ('$fileD','$id_mapel')");
-                  }
-                  if ($fileE <> "") {
-                    $file = mysqli_query($koneksi, "INSERT INTO file_pendukung (nama_file,id_mapel) values ('$fileE','$id_mapel')");
-                  }
-                  $no++;
                 }
-                $hasil2 = mysqli_query($koneksi, "TRUNCATE TABLE savsoft_qbank");
-                $hasil2 = mysqli_query($koneksi, "TRUNCATE TABLE savsoft_options");
+                mysqli_query($koneksi, "TRUNCATE TABLE savsoft_qbank");
+                mysqli_query($koneksi, "TRUNCATE TABLE savsoft_options");
               }
               $namamapel = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM mapel WHERE id_mapel='$id_mapel'"));
               if ($namamapel['jml_esai'] == 0) {

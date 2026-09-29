@@ -11,7 +11,7 @@ use RedisClient\ClientFactory;
 $Redis = new RedisClient();
 
 //setting up one redis-----------------------------------------
-if($token == $token1) {
+if(isset($_SESSION['id_pengawas']) || isset($_SESSION['id_user']) || ($token == $token1)) {
 
   $output = '';
   if (isset($_FILES['zip_file']['name'])) {

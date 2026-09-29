@@ -57,7 +57,7 @@ $db->DelRedisAll();
           </div>
           <tr>
             <td>
-              <input type='hidden' name='id_bank_soal' value=<?= $_REQUEST['id'] ?>>
+              <input type='hidden' name='id_bank_soal' value="<?= !empty($_REQUEST['id']) ? $_REQUEST['id'] : $mapel['id_mapel'] ?>">
             </td>
           </tr>
           <tr>
@@ -204,7 +204,18 @@ $db->DelRedisAll();
         success: function(response) {
           $('.loader').css('display', 'none');
           $('#boxpesan').html(response);
-          notify(response);
+          if (response.indexOf('Berhasil') !== -1) {
+            notify(response);
+            setTimeout(function() {
+              window.location.href = '?pg=banksoal&ac=lihat&id=<?= $mapel["id_mapel"] ?>';
+            }, 1200);
+          } else {
+            notifygagal(response);
+          }
+        },
+        error: function() {
+          $('.loader').css('display', 'none');
+          notifygagal('Gagal mengunggah file!');
         }
       });
     });
