@@ -26,7 +26,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $is_https_guru = (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
     || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https')
     || (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && strtolower($_SERVER['HTTP_X_FORWARDED_SSL']) === 'on')
-    || (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
+    || (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)
+    || (!empty($_SERVER['HTTP_CF_VISITOR']) && strpos($_SERVER['HTTP_CF_VISITOR'], 'https') !== false);
 
 $host_guru = !empty($_SERVER['HTTP_X_FORWARDED_HOST']) ? $_SERVER['HTTP_X_FORWARDED_HOST'] : (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost');
 $is_local_guru = preg_match('/^(localhost|127\.0\.0\.1|192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[0-1]))/i', $host_guru);
@@ -38,7 +39,20 @@ if (!$is_local_guru) {
     $protocol_guru = $is_https_guru ? "https" : "http";
 }
 
-$config['base_url'] = $protocol_guru . "://" . $host_guru . str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
+$project_root_raw = str_replace('\\', '/', realpath(dirname(dirname(dirname(__DIR__)))));
+$project_root = strtolower($project_root_raw);
+$doc_root = !empty($_SERVER['DOCUMENT_ROOT']) ? strtolower(str_replace('\\', '/', realpath($_SERVER['DOCUMENT_ROOT']) ?: $_SERVER['DOCUMENT_ROOT'])) : '';
+$doc_root = rtrim($doc_root, '/');
+
+$relative_path_guru = '';
+if ($doc_root !== '' && strpos($project_root, $doc_root) === 0) {
+    $relative_path_guru = substr($project_root_raw, strlen($doc_root));
+}
+$relative_path_guru = '/' . ltrim(str_replace('\\', '/', $relative_path_guru), '/');
+$relative_path_guru = rtrim($relative_path_guru, '/');
+
+$config['base_url'] = $protocol_guru . "://" . $host_guru . $relative_path_guru . "/guru/";
+
 
 /*
 |--------------------------------------------------------------------------
@@ -395,7 +409,7 @@ $config['encryption_key'] = '123asd45qwe!@#bnm67809%^';
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = NULL;
+$config['sess_save_path'] = is_writable(APPPATH . 'cache') ? APPPATH . 'cache' : sys_get_temp_dir();
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;

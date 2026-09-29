@@ -48,7 +48,7 @@ class Login extends CI_Controller {
 	{
 		$this->session->sess_destroy();
 		echo "<script>localStorage.clear();</script>";
-		redirect('');
+		redirect('login');
 	}
 
 

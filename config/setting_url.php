@@ -2,7 +2,8 @@
 
 //-------------Jika di Localhost-----------------
 $uri = $_SERVER['REQUEST_URI'];
-$pageurl = explode("/", $uri);
+$uri_path = parse_url($uri, PHP_URL_PATH);
+$pageurl = explode("/", $uri_path);
 
 $project_root_raw = str_replace('\\', '/', realpath(dirname(__DIR__)));
 $project_root = strtolower($project_root_raw);
@@ -53,6 +54,24 @@ $shift = count($subdirs);
 (isset($pageurl[1 + $shift])) ? $pg = $pageurl[1 + $shift] : $pg = '';
 (isset($pageurl[2 + $shift])) ? $ac = $pageurl[2 + $shift] : $ac = '';
 (isset($pageurl[3 + $shift])) ? $id = $pageurl[3 + $shift] : $id = 0;
+
+// Redirect /guru atau /crew jika diakses tanpa trailing slash
+if ($pg === 'guru') {
+    header("Location: " . $homeurl . "/guru/");
+    exit();
+}
+if ($pg === 'crew') {
+    header("Location: " . $homeurl . "/crew/");
+    exit();
+}
+
+// Support routing via query string jika dipanggil index.php?pg=...
+if (($pg === '' || $pg === 'index.php') && !empty($_GET['pg'])) {
+    if (in_array($_GET['pg'], array('ujian', 'absen', 'absen_mapel', 'materi', 'pass', 'tugassiswa', 'lihattugas', 'daftarnilaitugas', 'pengumuman', 'lihathasil', 'hasil', 'testongoing'))) {
+        $pg = $_GET['pg'];
+    }
+}
+
 
 
 //-------------Jika di Localhost-----------------

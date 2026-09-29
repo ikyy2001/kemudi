@@ -7,6 +7,15 @@ require("config/functions.crud.php");
 require("config/config.candy2.php");
 
 
+if ($pg === 'guru') {
+    header("Location: " . $homeurl . "/guru/");
+    exit();
+}
+if ($pg === 'crew') {
+    header("Location: " . $homeurl . "/crew/");
+    exit();
+}
+
 (isset($_SESSION['id_siswa'])) ? $id_siswa = $_SESSION['id_siswa'] : $id_siswa = 0;
 if ($id_siswa == 0) {
 	include "landing.php";

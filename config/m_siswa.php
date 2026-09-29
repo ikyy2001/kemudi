@@ -153,16 +153,19 @@ class Siswa extends Db{
   }
   //----------------Pangging Materi----------------------
   function paging($halaman,$materi2_mapel,$kodelv){
-    $kelas = $_SESSION['id_kelas'];
+    $kelas = isset($_SESSION['id_kelas']) ? $_SESSION['id_kelas'] : '';
     $result=$this->con->query("SELECT * FROM materi2 where materi2_mapel='$materi2_mapel' AND kode_level='$kodelv' ") or die($this->con->error);
-    foreach ($result as $value) {
-      $datakelas = unserialize($value['kelas']);
-      if (in_array($kelas, $datakelas) or in_array('semua', $datakelas)){
-        $array[]=$value;
+    $array = array();
+    if ($result) {
+      foreach ($result as $value) {
+        $datakelas = !empty($value['kelas']) ? @unserialize($value['kelas']) : array();
+        if (is_array($datakelas) && (in_array($kelas, $datakelas) or in_array('semua', $datakelas))){
+          $array[]=$value;
+        }
       }
-    } 
+    }
     $total = count($array);
-    $pages = ceil($total/$halaman);
+    $pages = ($halaman > 0) ? ceil($total/$halaman) : 1;
     return  $pages;
   }
   function halaman(){
@@ -180,15 +183,17 @@ class Siswa extends Db{
     INNER JOIN mata_pelajaran ON materi2.materi2_mapel=mata_pelajaran.kode_mapel 
     WHERE materi2.kode_level='$level3' AND materi2_mapel='$idmapel3' ORDER BY materi2_tgl DESC LIMIT $mulai, $halaman";
     $query = $this->con->query($sql) or die($this->con->error);
-    foreach ($query as $value) {
-      $rilis = strtotime($value['materi2_tgl_rilis']);
-      if($tglnow >=$rilis  ){
-        $datakelas = unserialize($value['kelas']);
-        if (in_array($kelas, $datakelas) or in_array('semua', $datakelas)){
-          $array[]=$value;
+    $array = array();
+    if ($query) {
+      foreach ($query as $value) {
+        $rilis = strtotime($value['materi2_tgl_rilis']);
+        if($tglnow >=$rilis  ){
+          $datakelas = !empty($value['kelas']) ? @unserialize($value['kelas']) : array();
+          if (is_array($datakelas) && (in_array($kelas, $datakelas) or in_array('semua', $datakelas))){
+            $array[]=$value;
+          }
         }
       }
-
     }
     return  $array;
   }
@@ -209,21 +214,23 @@ class Siswa extends Db{
   
   function get_materi_count($kelas,$level, $idmapel){ //DAFTAR MATERI
     $no=1;
+    $arrayJml = array('total_materi' => 0);
     $tglnow = strtotime(date("Y-m-d H:i:s"));
     $sql="SELECT *,materi2.kode_level AS kodelv FROM materi2 
     INNER JOIN mata_pelajaran ON materi2.materi2_mapel=mata_pelajaran.kode_mapel 
     WHERE materi2.kode_level='$level' AND materi2_mapel='$idmapel' ORDER BY materi2_tgl";
     $query = $this->con->query($sql) or die($this->con->error);
     
-    foreach ($query as $value) {
-      $rilis = strtotime($value['materi2_tgl_rilis']);
-      if($tglnow >=$rilis  ){
-        $datakelas = unserialize($value['kelas']);
-        if (in_array($kelas, $datakelas) or in_array('semua', $datakelas)){
-          $arrayJml['total_materi']=$no++;
+    if ($query) {
+      foreach ($query as $value) {
+        $rilis = strtotime($value['materi2_tgl_rilis']);
+        if($tglnow >=$rilis  ){
+          $datakelas = !empty($value['kelas']) ? @unserialize($value['kelas']) : array();
+          if (is_array($datakelas) && (in_array($kelas, $datakelas) or in_array('semua', $datakelas))){
+            $arrayJml['total_materi']=$no++;
+          }
         }
       }
-
     }
     return  $arrayJml;
   }

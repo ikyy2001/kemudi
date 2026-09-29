@@ -687,6 +687,14 @@ aksi
                     <div class='col-md-6'>
                       <label>Pilih Kelas</label><br>
                       <select name='kelas[]' id='soalkelas' class='form-control select2' multiple='multiple' style='width:100%' required='true'>
+                        <option value='semua'>Semua Kelas</option>
+                        <option value='khusus'>Khusus</option>
+                        <?php
+                        $qk = mysqli_query($koneksi, "SELECT * FROM kelas ORDER BY id_kelas ASC");
+                        while ($k = mysqli_fetch_array($qk)) {
+                          echo "<option value='$k[id_kelas]'>$k[id_kelas]</option>";
+                        }
+                        ?>
                       </select>
                     </div>
                   </div>

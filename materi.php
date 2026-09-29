@@ -42,7 +42,7 @@ if($_GET['pg']==''){ ?>
           $idmapel = enkripsi($value['kode_mapel']);
           if($jml['total_materi'] > 0){
         ?>
-		      <a href="?pg=guru&level=<?= $level2; ?>&idmapel=<?= $idmapel; ?>&page=1" class="list-group-item list-group-item-action"><?= $value['nama_mapel']; ?> <?= $value['kodelevel']; ?><span class="badge " style="background-color:#3c8dbc"> <?= $jml['total_materi'] ?> Materi
+		      <a href="<?= $homeurl ?>/materi/?pg=guru&level=<?= $level2; ?>&idmapel=<?= $idmapel; ?>&page=1" class="list-group-item list-group-item-action"><?= $value['nama_mapel']; ?> <?= $value['kodelevel']; ?><span class="badge " style="background-color:#3c8dbc"> <?= $jml['total_materi'] ?> Materi
         	</span></a>
 		      <?php 
 		    	}
@@ -63,13 +63,13 @@ elseif ($_GET['pg']=='guru') { ?>
 <div class='row'>
   <div class="col-md-12"> 
     <?php
-    $getguru =$_GET['id'];
-    $getlevel =$_GET['level'];
-    $getidmapel =$_GET['idmapel'];
+    $getguru = isset($_GET['id']) ? $_GET['id'] : '';
+    $getlevel = isset($_GET['level']) ? $_GET['level'] : '';
+    $getidmapel = isset($_GET['idmapel']) ? $_GET['idmapel'] : '';
 
-    $guru = dekripsi($getguru);
-    $level3 = dekripsi($getlevel);
-    $idmapel3 = dekripsi($getidmapel); //Kode Mapel
+    $guru = !empty($getguru) ? dekripsi($getguru) : '';
+    $level3 = !empty($getlevel) ? dekripsi($getlevel) : '';
+    $idmapel3 = !empty($getidmapel) ? dekripsi($getidmapel) : ''; //Kode Mapel
     
     $halaman = $dbb->halaman(); //2
     $mulai= $dbb->mulai($halaman); //0
@@ -82,16 +82,16 @@ elseif ($_GET['pg']=='guru') { ?>
       </div>
       <div class='box-body'>
         <?php
-        //$no=$mulai+1;
-        foreach ($artikel as $value) {
-          $idguruu = enkripsi($value['id_guru']);
-          $idmaterii = enkripsi($value['materi2_id']);
-          $materi2_mapel = enkripsi($value['materi2_mapel']);
-          $kodelv = enkripsi($value['kodelv']);
+        if (!empty($artikel) && (is_array($artikel) || is_object($artikel))) {
+          foreach ($artikel as $value) {
+            $idguruu = enkripsi($value['id_guru']);
+            $idmaterii = enkripsi($value['materi2_id']);
+            $materi2_mapel = enkripsi($value['materi2_mapel']);
+            $kodelv = enkripsi($value['kodelv']);
         ?>
         <div class="span8">
           <h3><?= $value['materi2_judul']; ?></h3>
-          <p><?= date('d-m-Y H:s',strtotime($value['materi2_tgl'])); ?></p>
+          <p><?= date('d-m-Y H:i',strtotime($value['materi2_tgl'])); ?></p>
           <p>Mapel <?= $value['nama_mapel']; ?></p>
           <div>
             <!-- <div class="more label"><a href="<?= $homeurl ?>/materi/?pg=baca&idmateri=<?= $value['materi2_id']?>">Read more</a></div>  -->
@@ -104,7 +104,7 @@ elseif ($_GET['pg']=='guru') { ?>
               <?php
               //jika link google drive tidak kosong
               if ($value['url_gdrive'] !=null or $value['url_gdrive'] !=""): ?>
-                <a class="btn btn-success" target="_blank" href="<?= $value[url_gdrive] ?>" ><i class="fa fa-link"></i> Link Materi</a>
+                <a class="btn btn-success" target="_blank" href="<?= $value['url_gdrive'] ?>" ><i class="fa fa-link"></i> Link Materi</a>
               <?php endif?>
 
               <?php if(!empty($value['url_embed']) or !empty($value['url_youtube'])){ ?>
@@ -117,16 +117,23 @@ elseif ($_GET['pg']=='guru') { ?>
         <hr/>
         
         </div>
-        <?php }?>
+        <?php 
+          }
+        } else {
+          echo "<div class='alert alert-info'><i class='fa fa-info-circle'></i> Belum ada materi yang tersedia untuk mata pelajaran ini.</div>";
+        }
+        ?>
       </div>
         <div class="text-center">
          <ul class="pagination">
           <?php 
-          $pangging = $dbb->paging($halaman, dekripsi($materi2_mapel),dekripsi($kodelv));
+          $paging_mapel = !empty($materi2_mapel) ? dekripsi($materi2_mapel) : $idmapel3;
+          $paging_kodelv = !empty($kodelv) ? dekripsi($kodelv) : $level3;
+          $pangging = $dbb->paging($halaman, $paging_mapel, $paging_kodelv);
           for ($i=1; $i<=$pangging ; $i++){ 
-            if($_GET["page"] == $i){ $aktif = 'class="active"';}else{ $aktif =''; }
+            if(isset($_GET["page"]) && $_GET["page"] == $i){ $aktif = 'class="active"';}else{ $aktif =''; }
           ?>
-            <li <?= $aktif; ?>><a  href="?pg=guru&idmapel=<?= $materi2_mapel ?>&level=<?= $kodelv ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+            <li <?= $aktif; ?>><a  href="<?= $homeurl ?>/materi/?pg=guru&idmapel=<?= enkripsi($paging_mapel) ?>&level=<?= enkripsi($paging_kodelv) ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
           <?php } ?>
          </ul>
         </div>
