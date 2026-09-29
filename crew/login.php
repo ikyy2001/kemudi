@@ -29,7 +29,8 @@ foreach ($daa1 as $value) {
 	<title>Login Admin | <?= APLIKASI . " - " . REVISI ?></title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/png" href="../favicon.ico" />
+	<link rel="icon" type="image/png" href="../dist/img/logo55.png" />
+	<link rel="shortcut icon" href="../dist/img/logo55.png" />
 	<link rel="stylesheet" type="text/css" href="../dist/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.css">
 

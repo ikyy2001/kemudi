@@ -24,7 +24,8 @@ foreach ($daa1 as $value) {
 	<title>Login | <?php echo $setting['aplikasi']; ?></title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/png" href="favicon.ico" />
+	<link rel="icon" type="image/png" href="<?= $homeurl ?>/dist/img/logo55.png" />
+	<link rel="shortcut icon" href="<?= $homeurl ?>/dist/img/logo55.png" />
 	<link rel="stylesheet" type="text/css" href="dist/vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="dist/fonts/iconic/css/material-design-iconic-font.min.css">
 	<link rel="stylesheet" type="text/css" href="dist/vendor/animate/animate.css">
@@ -41,7 +42,7 @@ foreach ($daa1 as $value) {
 				<form id="formlogin" action="ceklogin.php" class="login100-form validate-form">
 
 					<span class="animated infinite pulse delay-5s login100-form-title p-b-40">
-						<img src="<?php echo $setting['logo']; ?>" style="max-height:100px" class="img-responsive" alt="Responsive image">
+						<img src="<?= $homeurl ?>/<?= !empty($setting['logo']) ? $setting['logo'] : 'dist/img/logo55.png' ?>" style="max-height:100px" class="img-responsive" alt="Responsive image" onerror="this.src='<?= $homeurl ?>/dist/img/logo55.png'">
 					</span>
 					<span class="login100-form-title p-b-26">
 						<?php echo $setting['aplikasi']; ?>

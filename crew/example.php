@@ -1,10 +1,12 @@
 <?php
+require("../config/config.candy2.php");
 require("../config/config.default.php");
 require("../config/config.function.php");
 require("../config/functions.crud.php");
 // Basic example of PHP script to handle with jQuery-Tabledit plug-in.
 // Note that is just an example. Should take precautions such as filtering the input data.
-if($token == $token1) {
+(isset($_SESSION['id_pengawas'])) ? $id_pengawas = $_SESSION['id_pengawas'] : $id_pengawas = 0;
+if ($id_pengawas > 0 || ($token == $token1)) {
 
 
 header('Content-Type: application/json');

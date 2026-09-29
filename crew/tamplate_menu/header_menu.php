@@ -1,9 +1,14 @@
+<?php
+$app_logo = (!empty($setting['logo']) && file_exists(__DIR__ . '/../../' . $setting['logo'])) 
+    ? ($homeurl . '/' . $setting['logo']) 
+    : ($homeurl . '/dist/img/logo55.png');
+?>
 <a href='?' class='logo' style='background-color:#ffffff; border-bottom: 1px solid #eef2f6; border-right: 1px solid #eef2f6;'>
 	<span class='logo-mini'>
-		<img src="<?= $homeurl . '/' . $setting['logo'] ?>" height="30px" style="border-radius: 6px;">
+		<img src="<?= $app_logo ?>" height="30px" style="border-radius: 6px; object-fit: contain;" alt="Logo" onerror="this.src='<?= $homeurl ?>/dist/img/logo55.png'">
 	</span>
 	<span class='logo-lg' style="display:flex; align-items:center; justify-content:center; gap:8px; font-weight:800; color:#0f172a; font-size:16px;">
-		<img src="<?= $homeurl . '/' . $setting['logo'] ?>" height="34px" style="border-radius: 8px;"> 
+		<img src="<?= $app_logo ?>" height="34px" style="border-radius: 8px; object-fit: contain;" alt="Logo" onerror="this.src='<?= $homeurl ?>/dist/img/logo55.png'"> 
 		<span><?= !empty($setting['aplikasi']) ? $setting['aplikasi'] : 'JawaraCBT' ?></span>
 	</span>
 </a>

@@ -35,7 +35,8 @@ $tglsekarang = time();
   <meta http-equiv='X-UA-Compatible' content='IE=edge' />
   <title><?= $setting['aplikasi'] ?></title>
   <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' />
-  <link rel='shortcut icon' href='<?= $homeurl ?>/favicon.ico' />
+  <link rel='shortcut icon' href='<?= $homeurl ?>/dist/img/logo55.png' />
+  <link rel='icon' type='image/png' href='<?= $homeurl ?>/dist/img/logo55.png' />
   <link rel='stylesheet' href='<?= $homeurl ?>/dist/bootstrap/css/bootstrap.min.css' />
   <link rel='stylesheet' href='<?= $homeurl ?>/plugins/fontawesome/css/all.css' />
   <link rel='stylesheet' href='<?= $homeurl ?>/dist/css/AdminLTE.min.css' />
@@ -282,12 +283,17 @@ $tglsekarang = time();
   <?php if($pg=='testongoing'){ $hilang='style="display: none;"'; $displayn=""; }else{ $hilang=''; $displayn="content-wrapper"; }  ?>
   <div class='wrapper'>
     <header class='main-header' <?= $hilang ?>>
+      <?php
+      $student_logo = (!empty($setting['logo']) && file_exists(__DIR__ . '/' . $setting['logo'])) 
+          ? ($homeurl . '/' . $setting['logo']) 
+          : ($homeurl . '/dist/img/logo55.png');
+      ?>
       <a class='logo' style='background-color:#ffffff; border-bottom:1px solid #eef2f6; border-right:1px solid #eef2f6;'>
         <span class='logo-mini'>
-          <img src="<?= $homeurl . "/" . $setting['logo'] ?>" height="30px" style="border-radius: 6px;">
+          <img src="<?= $student_logo ?>" height="30px" style="border-radius: 6px; object-fit: contain;" alt="Logo" onerror="this.src='<?= $homeurl ?>/dist/img/logo55.png'">
         </span>
         <span class='logo-lg' style="display:flex; align-items:center; justify-content:center; gap:8px; font-weight:800; color:#0f172a; font-size:16px;">
-          <img src="<?= $homeurl . '/' . $setting['logo'] ?>" height="34px" style="border-radius: 8px;"> 
+          <img src="<?= $student_logo ?>" height="34px" style="border-radius: 8px; object-fit: contain;" alt="Logo" onerror="this.src='<?= $homeurl ?>/dist/img/logo55.png'"> 
           <span><?= !empty($setting['aplikasi']) ? $setting['aplikasi'] : 'JawaraCBT' ?></span>
         </span>
       </a>

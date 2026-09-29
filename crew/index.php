@@ -151,7 +151,8 @@ $mapel = mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM mata_pelajaran"))
 	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 	<title>Administrator | <?= $setting['aplikasi'] ?></title>
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-	<link rel='shortcut icon' href='<?= $homeurl ?>/favicon.ico' />
+	<link rel='shortcut icon' href='<?= $homeurl ?>/dist/img/logo55.png' />
+	<link rel='icon' type='image/png' href='<?= $homeurl ?>/dist/img/logo55.png' />
 	<link rel='stylesheet' href='<?= $homeurl ?>/dist/bootstrap/css/bootstrap.min.css' />
 
 	<link rel='stylesheet' href='<?= $homeurl ?>/plugins/fontawesome/css/all.css' />
@@ -1646,26 +1647,82 @@ $mapel = mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM mata_pelajaran"))
 				<?php elseif ($pg == 'kelas') : ?>
 					<?php
 					cek_session_admin();
-					if (isset($_POST['submit'])) :
-						$idkelas = str_replace(' ', '', $_POST['idkelas']);
-						$nama = $_POST['nama'];
-						$level = $_POST['level'];
-						$pk = $_POST['pk'];
+
+					// Handle AJAX tambah kelas
+					if (isset($_POST['aksi']) && $_POST['aksi'] == 'tambahkelas') {
+						header('Content-Type: application/json; charset=utf-8');
+						$idkelas = trim(str_replace(' ', '', isset($_POST['idkelas']) ? $_POST['idkelas'] : ''));
+						$nama = trim(isset($_POST['nama']) ? $_POST['nama'] : '');
+						$level = trim(isset($_POST['level']) ? $_POST['level'] : '');
+						$pk = trim(isset($_POST['pk']) ? $_POST['pk'] : '');
+
+						if (empty($idkelas) || empty($nama)) {
+							echo json_encode(['status' => 'error', 'message' => 'Kode kelas dan nama kelas wajib diisi!']);
+							exit;
+						}
+
+						$cek = mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM kelas WHERE id_kelas='$idkelas'"));
+						if ($cek > 0) {
+							echo json_encode(['status' => 'error', 'message' => "Kelas dengan kode '$idkelas' sudah ada!"]);
+							exit;
+						}
+
+						// Deteksi kolom idkls dan hitung id berikutnya jika tabel tidak auto_increment
+						$col_check = mysqli_query($koneksi, "SHOW COLUMNS FROM kelas LIKE 'idkls'");
+						$has_idkls = ($col_check && mysqli_num_rows($col_check) > 0);
+						$exec = false;
+						if ($has_idkls) {
+							$max_q = mysqli_query($koneksi, "SELECT MAX(idkls) AS max_id FROM kelas");
+							$max_row = mysqli_fetch_assoc($max_q);
+							$next_id = ($max_row && $max_row['max_id'] !== null) ? ((int)$max_row['max_id'] + 1) : 1;
+							$exec = mysqli_query($koneksi, "INSERT INTO kelas (idkls, id_kelas, nama, id_level, id_pk) VALUES ('$next_id', '$idkelas', '$nama', '$level', '$pk')");
+						}
+						if (!$exec) {
+							$exec = mysqli_query($koneksi, "INSERT INTO kelas (id_kelas, nama, id_level, id_pk) VALUES ('$idkelas', '$nama', '$level', '$pk')");
+						}
+
+						if ($exec) {
+							echo json_encode(['status' => 'success', 'message' => 'Data kelas berhasil disimpan!']);
+						} else {
+							echo json_encode(['status' => 'error', 'message' => 'Gagal menyimpan ke database: ' . mysqli_error($koneksi)]);
+						}
+						exit;
+					}
+
+					// Standard POST fallback
+					if (isset($_POST['submit']) || (isset($_POST['idkelas']) && !isset($_POST['aksi']))) :
+						$idkelas = trim(str_replace(' ', '', $_POST['idkelas']));
+						$nama = trim($_POST['nama']);
+						$level = trim($_POST['level']);
+						$pk = trim($_POST['pk']);
 						$cek = mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM kelas WHERE id_kelas='$idkelas'"));
 						if ($cek > 0) {
 							$info = info("Kelas dengan kode $idkelas sudah ada!", "NO");
 						} else {
-							$exec = mysqli_query($koneksi, "INSERT INTO kelas (id_kelas,nama,id_level,id_pk)VALUES('$idkelas','$nama','$level','$pk')");
+							$col_check = mysqli_query($koneksi, "SHOW COLUMNS FROM kelas LIKE 'idkls'");
+							$has_idkls = ($col_check && mysqli_num_rows($col_check) > 0);
+							$exec = false;
+							if ($has_idkls) {
+								$max_q = mysqli_query($koneksi, "SELECT MAX(idkls) AS max_id FROM kelas");
+								$max_row = mysqli_fetch_assoc($max_q);
+								$next_id = ($max_row && $max_row['max_id'] !== null) ? ((int)$max_row['max_id'] + 1) : 1;
+								$exec = mysqli_query($koneksi, "INSERT INTO kelas (idkls, id_kelas, nama, id_level, id_pk) VALUES ('$next_id', '$idkelas', '$nama', '$level', '$pk')");
+							}
+							if (!$exec) {
+								$exec = mysqli_query($koneksi, "INSERT INTO kelas (id_kelas, nama, id_level, id_pk) VALUES ('$idkelas', '$nama', '$level', '$pk')");
+							}
+
 							if (!$exec) :
-								$info = info("Gagal menyimpan!", "NO");
+								$info = info("Gagal menyimpan! " . mysqli_error($koneksi), "NO");
 							else :
-								jump("?pg=$pg");
+								jump("index.php?pg=$pg");
 							endif;
 						}
 					endif;
 					?>
 					<div class='row'>
 						<div class='col-md-12'>
+							<?= isset($info) ? $info : '' ?>
 							<div class='alert alert-warning '>
 								<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
 								<i class='icon fa fa-info'></i>
@@ -1675,7 +1732,7 @@ $mapel = mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM mata_pelajaran"))
 								<div class='box-header with-border'>
 									<h3 class='box-title'>Kelas</h3>
 									<div class='box-tools pull-right'>
-										<button class='btn btn-sm btn-flat btn-success' data-toggle='modal' data-target='#tambahkelas'><i class='fa fa-check'></i> Tambah Kelas</button>
+										<button class='btn btn-sm btn-flat btn-success' data-toggle='modal' data-target='#tambahkelas'><i class='fa fa-plus-circle'></i> Tambah Kelas</button>
 									</div>
 								</div><!-- /.box-header -->
 								<div class='box-body'>
@@ -1706,55 +1763,75 @@ $mapel = mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM mata_pelajaran"))
 								</div><!-- /.box-body -->
 							</div><!-- /.box -->
 						</div>
-						<div class='modal fade' id='tambahkelas' style='display: none;'>
+						<div class='modal fade' id='tambahkelas' role='dialog' aria-labelledby='modalTambahKelasLabel' aria-hidden='true' style='display: none;'>
 							<div class='modal-dialog'>
 								<div class='modal-content'>
 									<div class='modal-header bg-blue'>
-										<button class='close' data-dismiss='modal'><span aria-hidden='true'><i class='glyphicon glyphicon-remove'></i></span></button>
-										<h3 class='modal-title'>Tambah Kelas</h3>
+										<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+										<h4 class='modal-title' id='modalTambahKelasLabel'><i class='fa fa-plus-circle'></i> Tambah Kelas</h4>
 									</div>
-									<div class='modal-body'>
-										<form action='' method='post'>
+									<form id='formtambahkelas' action='' method='post'>
+										<div class='modal-body'>
 											<div class='form-group'>
-												<label>Kode Kelas</label>
-												<input type='text' name='idkelas' class='form-control' required='true' />
+												<label>Kode Kelas <span class='text-danger'>*</span></label>
+												<input type='text' name='idkelas' id='input_idkelas' class='form-control' placeholder='Contoh: XITKJ1' required />
+												<small class='text-muted'>Gunakan huruf/angka tanpa spasi.</small>
 											</div>
 											<div class='form-group'>
-												<label>Level</label>
-												<select name='level' class='form-control' required='true'>
-													<option value=''></option>
+												<label>Level Kelas <span class='text-danger'>*</span></label>
+												<select name='level' id='select_level' class='form-control' required>
+													<option value=''>-- Pilih Level --</option>
 													<?php
-													$levelQ = mysqli_query($koneksi, "SELECT * FROM level ");
-													while ($level = mysqli_fetch_array($levelQ)) {
-														echo "<option value='$level[kode_level]'>$level[kode_level]</option>";
+													$levels = [];
+													$levelQ = mysqli_query($koneksi, "SELECT DISTINCT kode_level FROM level WHERE kode_level IS NOT NULL AND kode_level != ''");
+													if ($levelQ) {
+														while ($lvl = mysqli_fetch_array($levelQ)) {
+															$levels[] = $lvl['kode_level'];
+															echo "<option value='$lvl[kode_level]'>$lvl[kode_level]</option>";
+														}
+													}
+													if (empty($levels)) {
+														$fallback_levels = ['X', 'XI', 'XII', 'SEMUA'];
+														foreach ($fallback_levels as $fl) {
+															echo "<option value='$fl'>$fl</option>";
+														}
 													}
 													?>
 												</select>
 											</div>
 											<div class='form-group'>
-												<label>Jurusan</label>
-												<select name='pk' class='form-control' required='true'>
-													<option value=''></option>
+												<label>Jurusan / Peminatan <span class='text-danger'>*</span></label>
+												<select name='pk' id='select_pk' class='form-control' required>
+													<option value=''>-- Pilih Jurusan --</option>
 													<?php
-													$levelQ = mysqli_query($koneksi, "SELECT * FROM pk ");
-													while ($level = mysqli_fetch_array($levelQ)) {
-														echo "<option value='$level[id_pk]'>$level[id_pk]</option>";
+													$pks = [];
+													$pkQ = mysqli_query($koneksi, "SELECT DISTINCT id_pk, program_keahlian FROM pk WHERE id_pk IS NOT NULL AND id_pk != ''");
+													if ($pkQ && mysqli_num_rows($pkQ) > 0) {
+														while ($p = mysqli_fetch_array($pkQ)) {
+															$pks[] = $p['id_pk'];
+															$label = !empty($p['program_keahlian']) ? $p['id_pk'] . ' - ' . $p['program_keahlian'] : $p['id_pk'];
+															echo "<option value='$p[id_pk]'>$label</option>";
+														}
+													}
+													if (empty($pks)) {
+														$fallback_pks = ['SEMUA', 'UMUM', 'IPA', 'IPS', 'TKJ', 'RPL', 'TKR', 'TP', 'AKL', 'OTKP'];
+														foreach ($fallback_pks as $fp) {
+															echo "<option value='$fp'>$fp</option>";
+														}
 													}
 													?>
 												</select>
 											</div>
 											<div class='form-group'>
-												<label>Nama Kelas</label>
-												<input type='text' name='nama' class='form-control' required='true' />
+												<label>Nama Kelas <span class='text-danger'>*</span></label>
+												<input type='text' name='nama' id='input_nama' class='form-control' placeholder='Contoh: XI TKJ 1' required />
 											</div>
-											<div class='modal-footer'>
-												<div class='box-tools pull-right '>
-													<button type='submit' name='submit' class='btn btn-sm btn-flat btn-success'><i class='fa fa-check'></i> Simpan</button>
-													<button type='button' class='btn btn-default btn-sm pull-left' data-dismiss='modal'>Close</button>
-												</div>
-											</div>
-										</form>
-									</div>
+										</div>
+										<div class='modal-footer'>
+											<button type='button' class='btn btn-default pull-left' data-dismiss='modal'>Batal</button>
+											<button type='submit' name='submit' id='btnsimpankelas' class='btn btn-primary'><i class='fa fa-save'></i> Simpan</button>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -2705,6 +2782,52 @@ $mapel = mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM mata_pelajaran"))
 						]
 					}
 				});
+
+				$('#formtambahkelas').on('submit', function(e) {
+					e.preventDefault();
+					var $btn = $('#btnsimpankelas');
+					var originalText = $btn.html();
+					$btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Menyimpan...');
+
+					$.ajax({
+						url: 'index.php?pg=kelas',
+						type: 'POST',
+						data: $(this).serialize() + '&aksi=tambahkelas',
+						dataType: 'json',
+						success: function(res) {
+							$btn.prop('disabled', false).html(originalText);
+							if (res.status === 'success') {
+								$('#tambahkelas').modal('hide');
+								$('.modal-backdrop').remove();
+								$('body').removeClass('modal-open').css('padding-right', '');
+								swal({
+									title: 'Berhasil!',
+									text: res.message,
+									icon: 'success',
+									button: 'OK'
+								}).then(function() {
+									window.location.reload();
+								});
+							} else {
+								swal({
+									title: 'Gagal!',
+									text: res.message,
+									icon: 'warning',
+									button: 'OK'
+								});
+							}
+						},
+						error: function(xhr, status, error) {
+							$btn.prop('disabled', false).html(originalText);
+							swal({
+								title: 'Error!',
+								text: 'Terjadi kesalahan sistem: ' + (xhr.responseText ? xhr.responseText.substring(0, 150) : error),
+								icon: 'error',
+								button: 'OK'
+							});
+						}
+					});
+				});
 			});
 		<?php endif; ?>
 		<?php if ($pg == 'matapelajaran') : ?>
@@ -2953,6 +3076,15 @@ $mapel = mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM mata_pelajaran"))
 				}
 			});
 		}
+
+		// Perbaikan modal Bootstrap di AdminLTE agar tidak stuck / tertutup backdrop
+		$(document).on('show.bs.modal', '.modal', function() {
+			$(this).appendTo('body');
+		});
+		$(document).on('hidden.bs.modal', '.modal', function() {
+			$('.modal-backdrop').remove();
+			$('body').removeClass('modal-open').css('padding-right', '');
+		});
 	</script>
 </body>
 

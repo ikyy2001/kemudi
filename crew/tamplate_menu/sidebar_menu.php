@@ -255,7 +255,7 @@ $is_attendance = in_array($current_pg, ['absen_tahun', 'absen_jam', 'absen_total
 	<!-- User Profile Card at Sidebar Bottom -->
 	<div class="jawara-sidebar-footer">
 		<?php if (!empty($pengawas['foto_pengawas']) && file_exists("../guru/fotoguru/$pengawas[id_pengawas]/$pengawas[foto_pengawas]")) : ?>
-			<img src='<?= $homeurl ?>/guru/fotoguru/<?= $pengawas['id_pengawas'] ?>/<?= $pengawas['foto_pengawas'] ?>' class='jawara-user-avatar' alt='Avatar'>
+			<img src='<?= $homeurl ?>/guru/fotoguru/<?= $pengawas['id_pengawas'] ?>/<?= $pengawas['foto_pengawas'] ?>' class='jawara-user-avatar' alt='Avatar' onerror="this.src='<?= $homeurl ?>/dist/img/avatar-6.png'">
 		<?php else : ?>
 			<img src='<?= $homeurl ?>/dist/img/avatar-6.png' class='jawara-user-avatar' alt='Avatar'>
 		<?php endif; ?>

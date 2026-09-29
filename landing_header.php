@@ -23,6 +23,8 @@ foreach ($daa1 as $value) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><?= $setting['aplikasi'] ?>: Kelas Elektronik & Manajemen Ujian Digital Interaktif</title>
   <meta name="description" content="<?= $setting['aplikasi'] ?> — Kelas Elektronik & Manajemen Ujian Digital Interaktif">
+  <link rel="icon" type="image/png" href="<?= $homeurl ?>/dist/img/logo55.png" />
+  <link rel="shortcut icon" href="<?= $homeurl ?>/dist/img/logo55.png" />
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <!-- Stylesheets -->

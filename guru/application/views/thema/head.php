@@ -3,6 +3,8 @@
 	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 	<title>Guru Dashboard | <?= !empty($setting['aplikasi']) ? $setting['aplikasi'] : 'JawaraCBT' ?></title>
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+	<link rel='shortcut icon' href='/dist/img/logo55.png' />
+	<link rel='icon' type='image/png' href='/dist/img/logo55.png' />
 	<link rel='stylesheet' href='../../dist/bootstrap/css/bootstrap.min.css' />
 	<link rel='stylesheet' href='../../plugins/fontawesome/css/all.css' />
 	<link rel='stylesheet' href='../../plugins/select2/select2.min.css' />
